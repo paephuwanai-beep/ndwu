@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบสหกรณ์ออมทรัพย์ออนไลน์</title>
+    <!-- ใช้ฟอนต์ Prompt เพื่อความทันสมัย -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- ใช้ Phosphor Icons สำหรับไอคอน -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* พื้นหลังสีน้ำเงินเข้มหรูหรา */
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* กล่องสไตล์กระจก (Glassmorphism) */
+        .glass-panel {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 35px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* ซ่อน panel ที่ไม่ได้ใช้งาน */
+        .hidden {
+            display: none !important;
+        }
+
+        h2 { margin-bottom: 8px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        p.subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 25px; line-height: 1.5; }
+
+        .input-group {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        input::placeholder { color: rgba(255, 255, 255, 0.6); }
+
+        .pin-input {
+            letter-spacing: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        button:disabled {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            cursor: not-allowed;
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link-text {
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            text-decoration: underline;
+            transition: 0.2s;
+        }
+
+        .link-text:hover { color: #fff; }
+
+        .link-center {
+            display: block;
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 15px;
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 10px 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .loading-text { display: none; margin-top: 15px; font-size: 14px; color: #a8e6cf; }
+    </style>
+</head>
+<body>
+
+    <!-- ================= 1. หน้าต่าง Login ================= -->
+    <div class="glass-panel" id="loginPanel">
+        <h2><i class="ph ph-shield-check"></i> เข้าสู่ระบบ</h2>
+        <p class="subtitle">ระบบสหกรณ์ออมทรัพย์ออนไลน์</p>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="loginEmail" placeholder="อีเมล (Email)" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="loginPassword" placeholder="รหัสผ่าน" required>
+            </div>
+            <button type="submit" id="loginBtn">เข้าสู่ระบบ <i class="ph ph-sign-in"></i></button>
+        </form>
+        
+        <div class="loading-text" id="loginLoading">กำลังตรวจสอบข้อมูล...</div>
+        
+        <div class="links-container">
+            <span class="link-text" onclick="showPanel('forgotPanel')">ลืมรหัสผ่าน?</span>
+            <span class="link-text" onclick="showPanel('registerPanel')">สมัครสมาชิกใหม่</span>
+        </div>
+    </div>
+
+    <!-- ================= 2. หน้าต่าง สมัครสมาชิก ================= -->
+    <div class="glass-panel hidden" id="registerPanel">
+        <h2><i class="ph ph-user-plus"></i> สมัครสมาชิก</h2>
+        <p class="subtitle">กรอกข้อมูลเพื่อขอรหัสยืนยัน OTP ทางอีเมล</p>
+        
+        <form id="registerForm">
+            <div class="input-group">
+                <input type="text" id="regName" placeholder="ชื่อ-นามสกุลจริง" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="regEmail" placeholder="อีเมล (สำหรับรับ OTP)" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="regPassword" placeholder="ตั้งรหัสผ่าน" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="regPin" class="pin-input" placeholder="ตั้งรหัส PIN 6 หลัก" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" title="รหัส PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น" required>
+            </div>
+            <button type="submit" id="regBtn">ขอรหัส OTP <i class="ph ph-paper-plane-right"></i></button>
+        </form>
+
+        <div class="loading-text" id="regLoading">กำลังส่งรหัส OTP ไปยังอีเมล...</div>
+        <span class="link-center" onclick="showPanel('loginPanel')">มีบัญชีแล้ว? เข้าสู่ระบบ</span>
+    </div>
+
+    <!-- ================= 3. หน้าต่าง ยืนยัน OTP (สำหรับการสมัคร) ================= -->
+    <div class="glass-panel hidden" id="otpRegisterPanel">
+        <h2><i class="ph ph-envelope-open"></i> ยืนยันอีเมล</h2>
+        <p class="subtitle">ส่งรหัส OTP ไปที่ <br><strong id="displayRegEmail">...</strong> แล้ว</p>
+        
+        <form id="otpRegisterForm">
+            <div class="input-group">
+                <input type="text" id="regOtpCode" class="pin-input" placeholder="กรอกรหัส 6 หลัก" inputmode="numeric" maxlength="6" required style="font-size: 24px; letter-spacing: 8px;">
+            </div>
+            <button type="submit" id="verifyRegBtn">ยืนยันการสมัคร <i class="ph ph-check-circle"></i></button>
+        </form>
+
+        <div class="loading-text" id="otpRegLoading">กำลังตรวจสอบรหัส OTP...</div>
+        <span class="link-center" onclick="showPanel('registerPanel')">ย้อนกลับ</span>
+    </div>
+
+    <!-- ================= 4. หน้าต่าง ลืมรหัสผ่าน (ขอ OTP) ================= -->
+    <div class="glass-panel hidden" id="forgotPanel">
+        <h2><i class="ph ph-lock-key"></i> ลืมรหัสผ่าน</h2>
+        <p class="subtitle">กรอกอีเมลของคุณเพื่อรับรหัส OTP รีเซ็ตรหัสผ่าน</p>
+        
+        <form id="forgotForm">
+            <div class="input-group">
+                <input type="email" id="forgotEmail" placeholder="อีเมลที่ใช้สมัคร" required>
+            </div>
+            <button type="submit" id="forgotBtn">ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i></button>
+        </form>
+
+        <div class="loading-text" id="forgotLoading">กำลังตรวจสอบและส่งอีเมล...</div>
+        <span class="link-center" onclick="showPanel('loginPanel')">กลับไปหน้าเข้าสู่ระบบ</span>
+    </div>
+
+    <!-- ================= 5. หน้าต่าง ตั้งรหัสผ่านใหม่ ================= -->
+    <div class="glass-panel hidden" id="resetPasswordPanel">
+        <h2><i class="ph ph-key"></i> ตั้งรหัสผ่านใหม่</h2>
+        <p class="subtitle">กรอกรหัส OTP ที่ได้รับ และตั้งรหัสผ่านใหม่</p>
+        
+        <form id="resetPasswordForm">
+            <div class="input-group">
+                <input type="text" id="resetOtpCode" class="pin-input" placeholder="รหัส OTP 6 หลัก" inputmode="numeric" maxlength="6" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="newPassword" placeholder="รหัสผ่านใหม่" required>
+            </div>
+            <button type="submit" id="resetBtn">บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i></button>
+        </form>
+
+        <div class="loading-text" id="resetLoading">กำลังเปลี่ยนรหัสผ่าน...</div>
+        <span class="link-center" onclick="showPanel('loginPanel')">ยกเลิก</span>
+    </div>
+
+    <!-- ================= 6. หน้า Dashboard (เมื่อล็อกอินสำเร็จ) ================= -->
+    <div class="glass-panel hidden" id="dashboardPanel">
+        <div class="dashboard-header">
+            <h3 id="dashName">ยินดีต้อนรับ, คุณ...</h3>
+            <p class="subtitle" style="margin: 0; color: #a8e6cf;" id="dashRole">สถานะ: สมาชิก</p>
+        </div>
+        
+        <div class="balance-card">
+            <p>ยอดเงินฝากสะสม</p>
+            <div class="balance-amount">฿ <span id="dashBalance">0.00</span></div>
+        </div>
+
+        <button style="background: rgba(76, 175, 80, 0.4);"><i class="ph ph-wallet"></i> แจ้งฝากเงิน</button>
+        <button style="background: rgba(244, 67, 54, 0.4);" onclick="logout()"><i class="ph ph-sign-out"></i> ออกจากระบบ</button>
+    </div>
+
+    <!-- ================= Javascript Logic ================= -->
+    <script>
+        // URL จาก Google Apps Script (Web App) ของคุณ
+        const API_URL = "https://script.google.com/macros/s/AKfycbwq_C39dHSoPqatT2Zemu3VobRnxViR53ebT1J4HdCvTaP9B3lsc4AqUgd-UttX_xYa/exec"; 
+        
+        // ตัวแปรพักข้อมูลชั่วคราว
+        let tempRegData = {};
+        let tempForgotEmail = "";
+
+        // ฟังก์ชันสลับหน้าจอ
+        function showPanel(panelId) {
+            const panels = ['loginPanel', 'registerPanel', 'otpRegisterPanel', 'forgotPanel', 'resetPasswordPanel', 'dashboardPanel'];
+            panels.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(panelId).classList.remove('hidden');
+        }
+
+        // ฟังก์ชันจัดการ UI สถานะโหลด
+        function setLoading(btnId, loadingId, isLoading, text = "") {
+            const btn = document.getElementById(btnId);
+            const loading = document.getElementById(loadingId);
+            btn.disabled = isLoading;
+            loading.style.display = isLoading ? 'block' : 'none';
+            if(text && !isLoading) btn.innerHTML = text;
+        }
+
+        // --- 1. จัดการฟอร์ม เข้าสู่ระบบ ---
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            setLoading("loginBtn", "loginLoading", true);
+
+            const payload = new URLSearchParams();
+            payload.append("action", "login");
+            payload.append("email", email);
+            payload.append("password", password);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
+                if (data.status === "success") {
+                    document.getElementById("dashName").innerText = "ยินดีต้อนรับ, คุณ " + data.user.name;
+                    document.getElementById("dashRole").innerText = "สถานะ: " + (data.user.role === 'Admin' ? 'ผู้ดูแลระบบ' : 'สมาชิก');
+                    document.getElementById("dashBalance").innerText = "-"; // ดึงยอดจริงทีหลัง
+                    showPanel('dashboardPanel');
+                } else {
+                    alert(data.message);
+                }
+            }).catch(err => {
+                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
+                setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
+            });
+        });
+
+        // --- 2. จัดการฟอร์ม สมัครสมาชิก (ขอ OTP) ---
+        document.getElementById("registerForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            // เก็บข้อมูลไว้ในตัวแปรชั่วคราว
+            tempRegData = {
+                name: document.getElementById("regName").value,
+                email: document.getElementById("regEmail").value,
+                password: document.getElementById("regPassword").value,
+                pin: document.getElementById("regPin").value
+            };
+
+            setLoading("regBtn", "regLoading", true);
+
+            const payload = new URLSearchParams();
+            payload.append("action", "register_request");
+            payload.append("email", tempRegData.email);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                setLoading("regBtn", "regLoading", false, 'ขอรหัส OTP <i class="ph ph-paper-plane-right"></i>');
+                if (data.status === "success") {
+                    document.getElementById("displayRegEmail").innerText = tempRegData.email;
+                    showPanel('otpRegisterPanel');
+                } else {
+                    alert(data.message);
+                }
+            }).catch(err => {
+                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
+                setLoading("regBtn", "regLoading", false, 'ขอรหัส OTP <i class="ph ph-paper-plane-right"></i>');
+            });
+        });
+
+        // --- 3. จัดการฟอร์ม ยืนยัน OTP (บันทึกสมัครสมาชิก) ---
+        document.getElementById("otpRegisterForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const otpCode = document.getElementById("regOtpCode").value;
+
+            setLoading("verifyRegBtn", "otpRegLoading", true);
+
+            const payload = new URLSearchParams();
+            payload.append("action", "register_verify");
+            payload.append("name", tempRegData.name);
+            payload.append("email", tempRegData.email);
+            payload.append("password", tempRegData.password);
+            payload.append("pin", tempRegData.pin);
+            payload.append("otp", otpCode);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                setLoading("verifyRegBtn", "otpRegLoading", false, 'ยืนยันการสมัคร <i class="ph ph-check-circle"></i>');
+                if (data.status === "success") {
+                    alert(data.message); // แจ้งเตือนว่ารออนุมัติ
+                    document.getElementById("registerForm").reset();
+                    document.getElementById("otpRegisterForm").reset();
+                    showPanel('loginPanel');
+                } else {
+                    alert(data.message);
+                }
+            }).catch(err => {
+                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
+                setLoading("verifyRegBtn", "otpRegLoading", false, 'ยืนยันการสมัคร <i class="ph ph-check-circle"></i>');
+            });
+        });
+
+        // --- 4. จัดการฟอร์ม ลืมรหัสผ่าน (ขอ OTP) ---
+        document.getElementById("forgotForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            tempForgotEmail = document.getElementById("forgotEmail").value;
+
+            setLoading("forgotBtn", "forgotLoading", true);
+
+            const payload = new URLSearchParams();
+            payload.append("action", "forgot_request");
+            payload.append("email", tempForgotEmail);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                setLoading("forgotBtn", "forgotLoading", false, 'ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i>');
+                if (data.status === "success") {
+                    showPanel('resetPasswordPanel');
+                } else {
+                    alert(data.message);
+                }
+            }).catch(err => {
+                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
+                setLoading("forgotBtn", "forgotLoading", false, 'ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i>');
+            });
+        });
+
+        // --- 5. จัดการฟอร์ม ตั้งรหัสผ่านใหม่ (ยืนยัน OTP รีเซ็ต) ---
+        document.getElementById("resetPasswordForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const otpCode = document.getElementById("resetOtpCode").value;
+            const newPassword = document.getElementById("newPassword").value;
+
+            setLoading("resetBtn", "resetLoading", true);
+
+            const payload = new URLSearchParams();
+            payload.append("action", "forgot_reset");
+            payload.append("email", tempForgotEmail);
+            payload.append("otp", otpCode);
+            payload.append("new_password", newPassword);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                setLoading("resetBtn", "resetLoading", false, 'บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i>');
+                if (data.status === "success") {
+                    alert("เปลี่ยนรหัสผ่านสำเร็จ! กรุณาเข้าสู่ระบบด้วยรหัสใหม่");
+                    document.getElementById("forgotForm").reset();
+                    document.getElementById("resetPasswordForm").reset();
+                    showPanel('loginPanel');
+                } else {
+                    alert(data.message);
+                }
+            }).catch(err => {
+                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
+                setLoading("resetBtn", "resetLoading", false, 'บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i>');
+            });
+        });
+
+        // --- ฟังก์ชันออกจากระบบ ---
+        function logout() {
+            if(confirm("ต้องการออกจากระบบใช่หรือไม่?")) {
+                document.getElementById("loginForm").reset();
+                showPanel('loginPanel');
+            }
+        }
+    </script>
+</body>
+</html>
