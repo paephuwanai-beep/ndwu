@@ -60,18 +60,24 @@
         .menu-btn { padding: 20px 10px; border: none; border-radius: 15px; background: rgba(255,255,255,0.1); color: #fff; font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
         .list-btn { width: 100%; padding: 18px 20px; margin-bottom: 12px; border: none; border-radius: 15px; background: rgba(255,255,255,0.1); color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.3s; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(10, 25, 47, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(10, 25, 47, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-around; align-items: center; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.5); font-size: 12px; cursor: pointer; transition: 0.3s; width: 25%; }
         .nav-item i { font-size: 24px; }
         .nav-item.active { color: #64ffda; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5); }
         
-        .admin-tab-btns { display: flex; gap: 10px; margin-bottom: 20px; }
-        .admin-tab { flex: 1; padding: 10px; text-align: center; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 14px; }
-        .admin-tab.active { background: #64ffda; color: #0a192f; font-weight: 600; }
+        /* Admin Tabs Layout */
+        .admin-tab-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .admin-tab { flex: 1 1 45%; padding: 12px 10px; text-align: center; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 13px; transition: 0.3s;}
+        .admin-tab.active { background: #64ffda; color: #0a192f; font-weight: 600; box-shadow: 0 4px 10px rgba(100,255,218,0.3); }
+        
+        .admin-item-row { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-bottom: 10px; }
+        .admin-btn { border: none; padding: 8px 12px; border-radius: 8px; font-size: 12px; color: #fff; cursor: pointer; }
+        .btn-green { background: #4caf50; } .btn-red { background: #e57373; } .btn-gray { background: #9e9e9e; }
     </style>
 </head>
 <body>
 
+    <!-- ================= AUTH SECTION ================= -->
     <div class="auth-wrapper" id="authWrapper">
         <div class="glass-panel" id="loginPanel">
             <h2><i class="ph ph-shield-check"></i> เข้าสู่ระบบ</h2>
@@ -133,9 +139,11 @@
         </div>
     </div>
 
+    <!-- ================= APP SECTION ================= -->
     <div class="app-wrapper hidden" id="appWrapper">
         <div class="top-bar"><div class="logo">my NDAD <span>pro</span></div><i class="ph ph-bell" style="font-size: 24px;"></i></div>
         <div class="container">
+            <!-- หน้าแรก -->
             <div id="page-home" class="page-section active">
                 <div class="glass-card account-card">
                     <div class="acc-name" id="accName">คุณ ...</div>
@@ -151,8 +159,9 @@
                 <div class="history-list" id="recentHistoryList"></div>
             </div>
 
+            <!-- หน้าฝากเงิน -->
             <div id="page-deposit" class="page-section">
-                <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงิน / จ่ายเงินออม</h3>
+                <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงิน</h3>
                 <div class="glass-card" style="padding: 25px 20px;">
                     <form id="depositForm">
                         <div class="input-group">
@@ -160,30 +169,29 @@
                             <input type="number" id="depositAmount" placeholder="เช่น 1000" min="1" required style="font-size: 20px; font-weight: 500;">
                         </div>
                         <div class="input-group" style="margin-top: 15px;">
-                            <label>แนบสลิปโอนเงิน (ขนาดไม่เกิน 5MB)</label>
+                            <label>แนบสลิปโอนเงิน (ไม่เกิน 5MB)</label>
                             <input type="file" id="slipFile" accept="image/*" required>
                         </div>
-                        <button type="submit" class="btn-primary" id="depositBtn" style="margin-top: 25px; background: rgba(76, 175, 80, 0.4);">
-                            ยืนยันการแจ้งฝากเงิน <i class="ph ph-paper-plane-right"></i>
-                        </button>
+                        <button type="submit" class="btn-primary" id="depositBtn" style="margin-top: 25px; background: rgba(76, 175, 80, 0.4);">ยืนยันการแจ้งฝากเงิน</button>
                     </form>
-                    <div class="loading-text" id="depositLoading">กำลังอัปโหลดสลิป กรุณารอสักครู่...</div>
+                    <div class="loading-text" id="depositLoading">กำลังอัปโหลดสลิป...</div>
                 </div>
             </div>
 
+            <!-- หน้าปันผล -->
             <div id="page-dividend" class="page-section">
                 <h3 class="section-title"><i class="ph ph-chart-line-up"></i> ประวัติปันผลย้อนหลัง</h3>
                 <div class="history-list" id="dividendList"></div>
             </div>
 
+            <!-- หน้าเมนู -->
             <div id="page-more" class="page-section">
                 <h3 class="section-title">เมนูเพิ่มเติม</h3>
-                <button class="glass-card list-btn"><div style="font-size: 14px;"><i class="ph ph-sliders"></i> ปรับการลงทุน</div></button>
-                <button class="glass-card list-btn"><div style="font-size: 14px;"><i class="ph ph-headset"></i> ติดต่อเจ้าหน้าที่</div></button>
+                <button class="glass-card list-btn"><div><i class="ph ph-sliders"></i> ปรับการลงทุน</div></button>
+                <button class="glass-card list-btn"><div><i class="ph ph-headset"></i> ติดต่อเจ้าหน้าที่</div></button>
                 <button class="glass-card list-btn" style="background: rgba(244, 67, 54, 0.1); color: #e57373; margin-top: 20px;" onclick="logout()"><div><i class="ph ph-sign-out"></i> ออกจากระบบ</div></button>
             </div>
         </div>
-
         <div class="bottom-nav">
             <div class="nav-item active" onclick="switchAppPage('page-home', this)"><i class="ph ph-house"></i><span>หน้าหลัก</span></div>
             <div class="nav-item" onclick="switchAppPage('page-deposit', this)"><i class="ph ph-wallet"></i><span>ฝากเงิน</span></div>
@@ -192,6 +200,7 @@
         </div>
     </div>
 
+    <!-- ================= ADMIN SECTION ================= -->
     <div class="app-wrapper hidden" id="adminWrapper">
         <div class="top-bar">
             <div class="logo">Admin <span>Panel</span></div>
@@ -201,39 +210,74 @@
             <div class="admin-tab-btns">
                 <div class="admin-tab active" id="tabUsers" onclick="switchAdminTab('users')">สมาชิกรออนุมัติ</div>
                 <div class="admin-tab" id="tabDeposits" onclick="switchAdminTab('deposits')">ตรวจสอบสลิป</div>
+                <div class="admin-tab" id="tabManage" onclick="switchAdminTab('manage')">จัดการสมาชิก</div>
+                <div class="admin-tab" id="tabPerformance" onclick="switchAdminTab('performance')">ผลประกอบการ/ปันผล</div>
             </div>
 
+            <!-- Tab 1: รออนุมัติ -->
             <div class="glass-card" style="padding: 20px;" id="adminContentUsers">
+                <h3 class="section-title">คำขอสมัครสมาชิกใหม่</h3>
                 <div id="pendingUsersList" style="display: flex; flex-direction: column; gap: 10px;"></div>
             </div>
 
+            <!-- Tab 2: ตรวจสอบสลิป -->
             <div class="glass-card hidden" style="padding: 20px;" id="adminContentDeposits">
+                <h3 class="section-title">รายการแจ้งฝากเงินรอดำเนินการ</h3>
                 <div id="pendingDepositsList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
+
+            <!-- Tab 3: จัดการสมาชิก -->
+            <div class="glass-card hidden" style="padding: 20px;" id="adminContentManage">
+                <h3 class="section-title">รายชื่อสมาชิกทั้งหมด</h3>
+                <div id="allMembersList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
+
+            <!-- Tab 4: ผลประกอบการและปันผล -->
+            <div class="hidden" id="adminContentPerformance">
+                <div class="glass-card" style="padding: 20px; margin-bottom: 20px;">
+                    <h3 class="section-title"><i class="ph ph-file-text"></i> บันทึกผลประกอบการ</h3>
+                    <form id="perfForm">
+                        <div class="input-group"><label>รอบ/งวด (เช่น ไตรมาส 1/69)</label><input type="text" id="perfPeriod" required></div>
+                        <div class="input-group"><label>รายได้รวม (บาท)</label><input type="number" id="perfRevenue" required></div>
+                        <div class="input-group"><label>กำไรสุทธิ (บาท)</label><input type="number" id="perfProfit" required></div>
+                        <div class="input-group"><label>การเติบโต Growth (%)</label><input type="number" step="0.01" id="perfGrowth" required></div>
+                        <div class="input-group"><label>ลิงก์ไฟล์รายงาน (Google Drive)</label><input type="url" id="perfUrl"></div>
+                        <button type="submit" class="btn-primary" id="perfBtn" style="background: rgba(33, 150, 243, 0.4);">บันทึกข้อมูล</button>
+                    </form>
+                </div>
+
+                <div class="glass-card" style="padding: 20px; border: 1px solid rgba(100,255,218,0.3);">
+                    <h3 class="section-title" style="color: #64ffda;"><i class="ph ph-gift"></i> คำนวณแจกจ่ายปันผล</h3>
+                    <form id="divForm">
+                        <div class="input-group"><label>อัตราเงินปันผล (%)</label><input type="number" step="0.01" id="divPercent" placeholder="เช่น 5.5" required style="font-size: 20px; font-weight: bold;"></div>
+                        <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">*ระบบจะคำนวณจากยอดเงินสะสมปัจจุบันของบัญชีที่อนุมัติแล้ว และเพิ่มยอดเข้าบัญชีทุกคนทันที</p>
+                        <button type="submit" class="btn-primary" id="divBtn" style="background: rgba(76, 175, 80, 0.5);">คำนวณและจ่ายเงินทันที</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- ================= Javascript Logic ================= -->
     <script>
-        // *** สำคัญ: นำลิงก์ Web App จาก Google Apps Script (เวอร์ชันใหม่) มาใส่ที่นี่ ***
-        const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec"; // <--- เปลี่ยนลิงก์
         
-        let tempRegData = {};
-        let tempForgotEmail = "";
-        let currentUserEmail = "";
+        let tempRegData = {}; let tempForgotEmail = ""; let currentUserEmail = "";
 
         // UI Routing
         function switchAuthPanel(id) { document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
         function switchAppPage(id, nav = null) {
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            if(nav) nav.classList.add('active');
-            else { if(id==='page-deposit') document.querySelectorAll('.nav-item')[1].classList.add('active'); if(id==='page-dividend') document.querySelectorAll('.nav-item')[2].classList.add('active'); }
+            if(nav) nav.classList.add('active'); else { if(id==='page-deposit') document.querySelectorAll('.nav-item')[1].classList.add('active'); if(id==='page-dividend') document.querySelectorAll('.nav-item')[2].classList.add('active'); }
         }
         function switchAdminTab(tab) {
-            document.getElementById('tabUsers').classList.remove('active'); document.getElementById('tabDeposits').classList.remove('active');
-            document.getElementById('adminContentUsers').classList.add('hidden'); document.getElementById('adminContentDeposits').classList.add('hidden');
-            if(tab === 'users') { document.getElementById('tabUsers').classList.add('active'); document.getElementById('adminContentUsers').classList.remove('hidden'); }
-            else { document.getElementById('tabDeposits').classList.add('active'); document.getElementById('adminContentDeposits').classList.remove('hidden'); }
+            ['users', 'deposits', 'manage', 'performance'].forEach(t => {
+                document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.remove('active');
+                document.getElementById('adminContent' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('hidden');
+            });
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+            document.getElementById('adminContent' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
         }
         function showAppMode(mode) {
             ['authWrapper', 'appWrapper', 'adminWrapper'].forEach(id => document.getElementById(id).classList.add('hidden'));
@@ -254,7 +298,7 @@
                 setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
                 if (data.status === "success") {
                     currentUserEmail = data.user.email;
-                    if (data.user.role === 'Admin') { showAppMode('admin'); loadAdminData(); } 
+                    if (data.user.role.toLowerCase() === 'admin') { showAppMode('admin'); loadAdminData(); } 
                     else { document.getElementById("accName").innerText = "คุณ " + data.user.name; document.getElementById("accId").innerText = "เลขบัญชี: " + data.user.userId; showAppMode('user'); loadDashboardData(); }
                 } else alert(data.message);
             }).catch(e => { alert("ขัดข้อง"); setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ'); });
@@ -273,7 +317,19 @@
             fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => { setLoading("verifyRegBtn", "otpRegLoading", false, 'ยืนยันการสมัคร'); if(data.status==="success") { alert(data.message); switchAuthPanel('loginPanel'); } else alert(data.message); });
         });
 
-        // APP System: โหลดข้อมูลแดชบอร์ด
+        document.getElementById("forgotForm").addEventListener("submit", (e) => {
+            e.preventDefault(); tempForgotEmail = document.getElementById("forgotEmail").value; setLoading("forgotBtn", "forgotLoading", true);
+            const p = new URLSearchParams(); p.append("action", "forgot_request"); p.append("email", tempForgotEmail);
+            fetch(API_URL, { method: "POST", body: p }).then(r => r.json()).then(d => { setLoading("forgotBtn", "forgotLoading", false, 'ส่งรหัส OTP'); if (d.status === "success") switchAuthPanel('resetPasswordPanel'); else alert(d.message); });
+        });
+
+        document.getElementById("resetPasswordForm").addEventListener("submit", (e) => {
+            e.preventDefault(); setLoading("resetBtn", "resetLoading", true);
+            const p = new URLSearchParams(); p.append("action", "forgot_reset"); p.append("email", tempForgotEmail); p.append("otp", document.getElementById("resetOtpCode").value); p.append("new_password", document.getElementById("newPassword").value);
+            fetch(API_URL, { method: "POST", body: p }).then(r => r.json()).then(d => { setLoading("resetBtn", "resetLoading", false, 'บันทึกรหัสผ่านใหม่'); if (d.status === "success") { alert("เปลี่ยนรหัสผ่านสำเร็จ!"); switchAuthPanel('loginPanel'); } else alert(d.message); });
+        });
+
+        // APP System: Dashboard
         function loadDashboardData() {
             const payload = new URLSearchParams(); payload.append("action", "get_dashboard_data"); payload.append("email", currentUserEmail);
             fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => {
@@ -285,18 +341,10 @@
                         let html = "";
                         data.history.slice(0, 5).forEach(tx => {
                             let icon = "ph-wallet"; let color = "#ffca28"; let iconClass = "pend"; let sign = ""; let statusText = "รอดำเนินการ";
-                            if(tx.status === "Approved") {
-                                statusText = "สำเร็จ"; color = "#81c784"; iconClass = "in"; sign = "+";
-                                icon = tx.type === "Dividend" ? "ph-gift" : "ph-download-simple";
-                            } else if (tx.status === "Rejected") { statusText = "ปฏิเสธ"; color = "#e57373"; iconClass = "out"; }
+                            if(tx.status === "Approved") { statusText = "สำเร็จ"; color = "#81c784"; iconClass = "in"; sign = "+"; icon = tx.type === "Dividend" ? "ph-gift" : "ph-download-simple"; } 
+                            else if (tx.status === "Rejected") { statusText = "ปฏิเสธ"; color = "#e57373"; iconClass = "out"; }
                             
-                            html += `<div class="glass-card history-item">
-                                <div style="display: flex; gap: 15px; align-items: center;">
-                                    <div class="hist-icon ${iconClass}"><i class="ph ${icon}"></i></div>
-                                    <div><div style="font-weight: 500;">${tx.type === "Deposit" ? "ฝากเงิน" : "เงินปันผล"} <span style="font-size:10px; padding:2px 5px; background:rgba(255,255,255,0.1); border-radius:4px;">${statusText}</span></div><div style="font-size: 12px; color: rgba(255,255,255,0.6);">${tx.date}</div></div>
-                                </div>
-                                <div style="font-weight: 500; color: ${color};">${sign}${tx.amount.toLocaleString()}</div>
-                            </div>`;
+                            html += `<div class="glass-card history-item"><div style="display: flex; gap: 15px; align-items: center;"><div class="hist-icon ${iconClass}"><i class="ph ${icon}"></i></div><div><div style="font-weight: 500;">${tx.type === "Deposit" ? "ฝากเงิน" : "เงินปันผล"} <span style="font-size:10px; padding:2px 5px; background:rgba(255,255,255,0.1); border-radius:4px;">${statusText}</span></div><div style="font-size: 12px; color: rgba(255,255,255,0.6);">${tx.date}</div></div></div><div style="font-weight: 500; color: ${color};">${sign}${tx.amount.toLocaleString()}</div></div>`;
                         });
                         histDiv.innerHTML = html;
                     } else histDiv.innerHTML = '<div style="text-align: center; color: rgba(255,255,255,0.5);">ยังไม่มีประวัติ</div>';
@@ -311,68 +359,80 @@
             });
         }
 
-        // APP System: อัปโหลดสลิป Base64
+        // APP System: Upload Slip
         document.getElementById("depositForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const amount = document.getElementById("depositAmount").value;
-            const fileInput = document.getElementById("slipFile");
-            if (fileInput.files.length === 0) return alert("กรุณาแนบรูปภาพสลิป");
-            const file = fileInput.files[0];
+            e.preventDefault(); const amount = document.getElementById("depositAmount").value; const fileInput = document.getElementById("slipFile");
+            if (fileInput.files.length === 0) return alert("กรุณาแนบรูปภาพสลิป"); const file = fileInput.files[0];
             if (file.size > 5 * 1024 * 1024) return alert("ขนาดไฟล์ใหญ่เกินไป (จำกัด 5MB)");
 
             setLoading("depositBtn", "depositLoading", true);
             const reader = new FileReader();
             reader.onload = function(event) {
-                const payload = new URLSearchParams();
-                payload.append("action", "upload_deposit"); payload.append("email", currentUserEmail);
-                payload.append("amount", amount); payload.append("fileName", file.name); payload.append("fileData", event.target.result);
+                const payload = new URLSearchParams(); payload.append("action", "upload_deposit"); payload.append("email", currentUserEmail); payload.append("amount", amount); payload.append("fileName", file.name); payload.append("fileData", event.target.result);
                 fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => {
                     setLoading("depositBtn", "depositLoading", false, 'ยืนยันการแจ้งฝากเงิน');
-                    if (data.status === "success") { alert(data.message); document.getElementById("depositForm").reset(); switchAppPage('page-home'); loadDashboardData(); } 
-                    else alert(data.message);
+                    if (data.status === "success") { alert(data.message); document.getElementById("depositForm").reset(); switchAppPage('page-home'); loadDashboardData(); } else alert(data.message);
                 }).catch(err => { alert("ขัดข้อง"); setLoading("depositBtn", "depositLoading", false, 'ยืนยันการแจ้งฝากเงิน'); });
             };
             reader.readAsDataURL(file);
         });
 
-        // ADMIN System: ดึงข้อมูลและอนุมัติ
+        // ADMIN System: ดึงข้อมูล
         function loadAdminData() {
-            document.getElementById("pendingUsersList").innerHTML = "กำลังโหลด..."; document.getElementById("pendingDepositsList").innerHTML = "กำลังโหลด...";
-            const payload = new URLSearchParams(); payload.append("action", "admin_get_pending_data");
+            document.getElementById("pendingUsersList").innerHTML = "กำลังโหลด..."; document.getElementById("pendingDepositsList").innerHTML = "กำลังโหลด..."; document.getElementById("allMembersList").innerHTML = "กำลังโหลด...";
+            const payload = new URLSearchParams(); payload.append("action", "admin_get_all_data");
             fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => {
                 if(data.status === "success") {
-                    // เรนเดอร์สมาชิกรออนุมัติ
-                    let uHtml = "";
-                    if(data.users.length > 0) {
-                        data.users.forEach(u => { uHtml += `<div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;"><div><div style="font-weight: 500;">${u.name}</div><div style="font-size: 12px; color: rgba(255,255,255,0.7);">${u.email}</div></div><button onclick="approveUser('${u.email}')" style="border:none; padding:6px 12px; border-radius:8px; background:#4caf50; color:#fff; cursor:pointer;">อนุมัติ</button></div>`; });
-                    } else uHtml = "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีสมาชิกรออนุมัติ</div>";
+                    // รออนุมัติ
+                    let uHtml = data.pendingUsers.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีสมาชิกรออนุมัติ</div>";
+                    data.pendingUsers.forEach(u => { uHtml += `<div class="admin-item-row"><div style="display:flex; justify-content:space-between; align-items:center;"><div><div style="font-weight: 500;">${u.name}</div><div style="font-size: 12px; color: rgba(255,255,255,0.7);">${u.email}</div></div><button onclick="updateUserStatus('${u.email}', 'Approved')" class="admin-btn btn-green">อนุมัติ</button></div></div>`; });
                     document.getElementById("pendingUsersList").innerHTML = uHtml;
 
-                    // เรนเดอร์สลิปรอตรวจสอบ
-                    let dHtml = "";
-                    if(data.deposits.length > 0) {
-                        data.deposits.forEach(d => { dHtml += `<div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px;">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div style="font-size:12px; color:rgba(255,255,255,0.7);">${d.date}<br>${d.email}</div><div style="font-weight:600; color:#ffca28;">฿ ${d.amount.toLocaleString()}</div></div>
-                            <a href="${d.slipUrl}" target="_blank" style="display:block; text-align:center; padding:8px; background:rgba(255,255,255,0.1); border-radius:8px; color:#90caf9; text-decoration:none; margin-bottom:10px; font-size:14px;"><i class="ph ph-image"></i> ดูรูปสลิป</a>
-                            <div style="display:flex; gap:10px;"><button onclick="verifyDeposit('${d.txId}', 'Approved')" style="flex:1; border:none; padding:8px; border-radius:8px; background:#4caf50; color:#fff; cursor:pointer;">ยืนยันยอด</button><button onclick="verifyDeposit('${d.txId}', 'Rejected')" style="flex:1; border:none; padding:8px; border-radius:8px; background:#e57373; color:#fff; cursor:pointer;">ปฏิเสธ</button></div>
-                        </div>`; });
-                    } else dHtml = "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีรายการแจ้งฝาก</div>";
+                    // สลิป
+                    let dHtml = data.deposits.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีรายการแจ้งฝาก</div>";
+                    data.deposits.forEach(d => { dHtml += `<div class="admin-item-row"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div style="font-size:12px; color:rgba(255,255,255,0.7);">${d.date}<br>${d.email}</div><div style="font-weight:600; color:#ffca28;">฿ ${d.amount.toLocaleString()}</div></div><a href="${d.slipUrl}" target="_blank" style="display:block; text-align:center; padding:8px; background:rgba(255,255,255,0.1); border-radius:8px; color:#90caf9; text-decoration:none; margin-bottom:10px; font-size:14px;"><i class="ph ph-image"></i> ดูรูปสลิป</a><div style="display:flex; gap:10px;"><button onclick="verifyDeposit('${d.txId}', 'Approved')" class="admin-btn btn-green" style="flex:1;">ยืนยันยอด</button><button onclick="verifyDeposit('${d.txId}', 'Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`; });
                     document.getElementById("pendingDepositsList").innerHTML = dHtml;
+
+                    // สมาชิกทั้งหมด
+                    let mHtml = data.allMembers.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีสมาชิก</div>";
+                    data.allMembers.forEach(m => {
+                        let btn = m.status === 'Blocked' ? `<button onclick="updateUserStatus('${m.email}', 'Approved')" class="admin-btn btn-green">ปลดบล็อก</button>` : `<button onclick="updateUserStatus('${m.email}', 'Blocked')" class="admin-btn btn-red">ระงับใช้งาน</button>`;
+                        mHtml += `<div class="admin-item-row"><div style="display:flex; justify-content:space-between; align-items:center;"><div><div style="font-weight: 500;">${m.name}</div><div style="font-size: 12px; color: rgba(255,255,255,0.7);">${m.email} | สถานะ: ${m.status}</div></div>${btn}</div></div>`; 
+                    });
+                    document.getElementById("allMembersList").innerHTML = mHtml;
                 }
             });
         }
 
-        function approveUser(email) {
-            if(!confirm("อนุมัติผู้ใช้: " + email)) return;
-            const payload = new URLSearchParams(); payload.append("action", "admin_approve_user"); payload.append("target_email", email);
-            fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => { if(data.status==="success") loadAdminData(); else alert(data.message); });
+        function updateUserStatus(email, status) {
+            if(!confirm(`ยืนยันการตั้งสถานะ ${status} สำหรับ: ${email} ?`)) return;
+            const payload = new URLSearchParams(); payload.append("action", "admin_update_member_status"); payload.append("target_email", email); payload.append("new_status", status);
+            fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => { if(data.status==="success") { alert("อัปเดตสำเร็จ"); loadAdminData(); } });
         }
 
         function verifyDeposit(txId, status) {
             if(!confirm("ยืนยันดำเนินการรายการนี้?")) return;
             const payload = new URLSearchParams(); payload.append("action", "admin_verify_deposit"); payload.append("tx_id", txId); payload.append("new_status", status);
-            fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => { if(data.status==="success") loadAdminData(); else alert(data.message); });
+            fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => { if(data.status==="success") { alert("สำเร็จ"); loadAdminData(); } });
         }
+
+        // ADMIN: บันทึกผลประกอบการ
+        document.getElementById("perfForm").addEventListener("submit", (e) => {
+            e.preventDefault(); const btn = document.getElementById("perfBtn"); btn.disabled = true; btn.innerText = "กำลังบันทึก...";
+            const p = new URLSearchParams(); p.append("action", "admin_save_performance");
+            p.append("period", document.getElementById("perfPeriod").value); p.append("revenue", document.getElementById("perfRevenue").value);
+            p.append("profit", document.getElementById("perfProfit").value); p.append("growth", document.getElementById("perfGrowth").value); p.append("reportUrl", document.getElementById("perfUrl").value);
+            fetch(API_URL, { method: "POST", body: p }).then(r => r.json()).then(d => { btn.disabled = false; btn.innerText = "บันทึกข้อมูล"; if(d.status==="success") { alert(d.message); document.getElementById("perfForm").reset(); } });
+        });
+
+        // ADMIN: คำนวณปันผล
+        document.getElementById("divForm").addEventListener("submit", (e) => {
+            e.preventDefault(); const percent = document.getElementById("divPercent").value;
+            if(!confirm(`ยืนยันการแจกจ่ายปันผล ${percent}% เข้าบัญชีสมาชิกทุกคนใช่หรือไม่?\n(เมื่อกดแล้วระบบจะเพิ่มยอดทันที)`)) return;
+            const btn = document.getElementById("divBtn"); btn.disabled = true; btn.innerText = "กำลังคำนวณและประมวลผล...";
+            const p = new URLSearchParams(); p.append("action", "admin_calculate_dividend"); p.append("percent", percent);
+            fetch(API_URL, { method: "POST", body: p }).then(r => r.json()).then(d => { btn.disabled = false; btn.innerText = "คำนวณและจ่ายเงินทันที"; if(d.status==="success") { alert(d.message); document.getElementById("divForm").reset(); } });
+        });
 
         function logout() { if(confirm("ต้องการออกจากระบบใช่หรือไม่?")) { document.getElementById("loginForm").reset(); currentUserEmail = ""; showAppMode('auth'); } }
     </script>
