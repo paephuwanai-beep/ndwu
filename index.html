@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>my NDAD pro - สหกรณ์ออมทรัพย์</title>
     
-    <!-- โหลด Font และ Icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -146,7 +145,6 @@
 </head>
 <body>
 
-    <!-- ================= CUSTOM POPUP ================= -->
     <div id="customModal" class="modal-overlay">
         <div class="modal-box">
             <div id="modalIcon" style="font-size: 50px; margin-bottom: 15px; color: #00E5FF;"></div>
@@ -162,10 +160,7 @@
         </div>
     </div>
 
-    <!-- ================= AUTHENTICATION ================= -->
     <div class="auth-wrapper" id="authWrapper">
-        
-        <!-- LOGIN -->
         <div class="glass-panel" id="loginPanel">
             <div style="margin-bottom: 35px;">
                 <div class="app-logo">
@@ -178,13 +173,12 @@
                 <div class="input-group"><input type="password" id="loginPassword" placeholder="รหัสผ่าน" required></div>
                 <button type="submit" class="btn-primary" id="loginBtn">เข้าสู่ระบบ</button>
             </form>
-            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 14px;">
+            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 13px;">
                 <span style="color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('forgotPanel')">ลืมรหัสผ่าน?</span>
                 <span style="color: #00E5FF; cursor: pointer; font-weight: 500;" onclick="switchAuthPanel('registerPanel')">สมัครสมาชิกใหม่</span>
             </div>
         </div>
         
-        <!-- REGISTER -->
         <div class="glass-panel hidden" id="registerPanel">
             <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-user-plus" style="margin-right: 8px;"></i> สมัครสมาชิกใหม่</h2>
             <form id="registerForm">
@@ -197,7 +191,6 @@
             <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับไปหน้าเข้าสู่ระบบ</div>
         </div>
 
-        <!-- OTP -->
         <div class="glass-panel hidden" id="otpRegisterPanel">
             <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-envelope-open" style="margin-right: 8px;"></i> ยืนยันรหัส OTP</h2>
             <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 25px;">กรุณากรอกรหัส 6 หลักที่ส่งไปยังอีเมลของคุณ</p>
@@ -208,7 +201,6 @@
             <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('registerPanel')">ย้อนกลับ</div>
         </div>
 
-        <!-- FORGOT PASSWORD -->
         <div class="glass-panel hidden" id="forgotPanel">
             <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-lock-key" style="margin-right: 8px;"></i> ลืมรหัสผ่าน</h2>
             <form id="forgotForm">
@@ -218,7 +210,6 @@
             <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับ</div>
         </div>
 
-        <!-- RESET PASSWORD -->
         <div class="glass-panel hidden" id="resetPasswordPanel">
             <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-key" style="margin-right: 8px;"></i> ตั้งรหัสผ่านใหม่</h2>
             <form id="resetPasswordForm">
@@ -230,7 +221,6 @@
         </div>
     </div>
 
-    <!-- ================= MEMBER APP ================= -->
     <div class="app-wrapper hidden" id="appWrapper">
         <div class="top-bar">
             <div class="app-logo">
@@ -243,7 +233,6 @@
         </div>
         
         <div class="container">
-            <!-- 1. Home -->
             <div id="page-home" class="page-section active">
                 <div class="account-card">
                     <div class="acc-name" id="accName">คุณ ...</div>
@@ -260,7 +249,6 @@
                 <div id="recentHistoryList" class="history-list"></div>
             </div>
 
-            <!-- 2. Deposit -->
             <div id="page-deposit" class="page-section">
                 <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงินออมทรัพย์</h3>
                 <div class="glass-card" style="padding: 30px 20px;">
@@ -278,12 +266,11 @@
                 </div>
             </div>
 
-            <!-- 3. Loan -->
             <div id="page-loan" class="page-section">
                 <h3 class="section-title"><i class="ph ph-hand-coins"></i> บัญชีสินเชื่อ</h3>
                 <div id="loanActiveList"></div>
                 
-                <div class="glass-card" style="padding: 25px 20px; margin-top: 25px; border: 1px dashed rgba(0,229,255,0.5);">
+                <div class="glass-card" style="padding: 25px 20px; margin-top: 20px; border: 1px dashed rgba(0,229,255,0.5);">
                     <h4 style="margin-bottom: 20px; color: #00E5FF; font-weight: 500;"><i class="ph ph-plus-circle"></i> ยื่นขอสินเชื่อใหม่</h4>
                     <form id="reqLoanForm">
                         <div class="input-group">
@@ -295,7 +282,6 @@
                 </div>
             </div>
 
-            <!-- 4. Pay Loan -->
             <div id="page-pay-loan" class="page-section">
                 <h3 class="section-title"><i class="ph ph-money"></i> ชำระค่างวดสินเชื่อ</h3>
                 <div class="glass-card" style="padding: 30px 20px;">
@@ -316,25 +302,21 @@
                 </div>
             </div>
 
-            <!-- 5. Dividend -->
             <div id="page-dividend" class="page-section">
                 <h3 class="section-title"><i class="ph ph-chart-line-up"></i> ประวัติรับเงินปันผล</h3>
                 <div id="dividendList" class="history-list"></div>
             </div>
 
-            <!-- 6. Notifications -->
             <div id="page-notifications" class="page-section">
                 <h3 class="section-title"><i class="ph ph-bell"></i> กล่องข้อความแจ้งเตือน</h3>
                 <div id="notifyList" class="history-list"></div>
             </div>
 
-            <!-- 7. Receipts -->
             <div id="page-receipts" class="page-section">
                 <h3 class="section-title"><i class="ph ph-receipt"></i> คลังใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
                 <div id="archiveReceiptList" class="history-list"></div>
             </div>
             
-            <!-- 8. Menu -->
             <div id="page-more" class="page-section">
                 <h3 class="section-title"><i class="ph ph-gear"></i> ตั้งค่าและบริการ</h3>
                 
@@ -345,13 +327,12 @@
                 <button class="list-btn" onclick="showModal('ติดต่อเรา', 'เบอร์โทรศัพท์: 080-123-4567<br>LINE Official: @myndad.pro<br>ติดต่อได้ในวันและเวลาราชการ')">
                     <div><i class="ph ph-headset" style="font-size: 22px; margin-right: 8px;"></i> ติดต่อคณะกรรมการ</div>
                 </button>
-                <button class="list-btn" style="color: #EF4444; border-left: 4px solid #EF4444; margin-top: 10px;" onclick="showModal('ออกจากระบบ', 'ต้องการออกจากระบบใช่หรือไม่?', true, ()=>{ document.getElementById('loginForm').reset(); showAppMode('auth'); })">
+                <button class="list-btn" style="color: #EF4444; border-left: 4px solid #EF4444; margin-top: 10px;" onclick="handleLogout()">
                     <div><i class="ph ph-sign-out" style="font-size: 22px; margin-right: 8px;"></i> ออกจากระบบ</div>
                 </button>
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <div class="nav-item active" id="nav_home" onclick="switchAppPage('page-home', 'nav_home')"><i class="ph ph-house"></i>หน้าหลัก</div>
             <div class="nav-item" id="nav_loan" onclick="switchAppPage('page-loan', 'nav_loan')"><i class="ph ph-hand-coins"></i>สินเชื่อ</div>
@@ -360,19 +341,22 @@
         </div>
     </div>
 
-    <!-- ================= ADMIN APP ================= -->
     <div class="app-wrapper hidden" id="adminWrapper">
         <div class="top-bar">
             <div class="app-logo" style="font-size: 18px;">
                 <div><span class="main-text">Admin</span><span class="pro-text" style="font-size: 14px; color: #F59E0B;">Panel</span></div>
             </div>
-            <div style="font-size: 12px; color: #00E5FF; cursor: pointer; border: 1px solid rgba(0,229,255,0.3); padding: 8px 14px; border-radius: 12px; display: flex; align-items: center; gap: 6px; background: rgba(0,229,255,0.1);" onclick="switchToUserMode()">
-                <i class="ph ph-user-switch" style="font-size: 18px;"></i> โหมดสมาชิก
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="font-size: 12px; color: #00E5FF; cursor: pointer; border: 1px solid rgba(0,229,255,0.3); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; background: rgba(0,229,255,0.1);" onclick="switchToUserMode()">
+                    <i class="ph ph-user-switch" style="font-size: 16px;"></i> โหมดสมาชิก
+                </div>
+                <div style="font-size: 12px; color: #EF4444; cursor: pointer; border: 1px solid rgba(239,68,68,0.3); padding: 8px 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.1);" onclick="handleLogout()">
+                    <i class="ph ph-sign-out" style="font-size: 16px;"></i> ออก
+                </div>
             </div>
         </div>
         <div class="container">
             
-            <!-- ADMIN TABS -->
             <div class="admin-tab-btns">
                 <div class="admin-tab active" id="tabBtn_users" onclick="switchAdminTab('users')">สมัครใหม่</div>
                 <div class="admin-tab" id="tabBtn_deposits" onclick="switchAdminTab('deposits')">สลิปฝาก</div>
@@ -381,7 +365,6 @@
                 <div class="admin-tab" id="tabBtn_div" onclick="switchAdminTab('div')">จ่ายปันผล</div>
             </div>
 
-            <!-- ADMIN CONTENTS -->
             <div id="adminContent_users" class="admin-content-section active">
                 <div class="glass-card" style="padding: 25px 20px;">
                     <h3 class="section-title" style="margin-top:0;"><i class="ph ph-users"></i> คำขอสมัครสมาชิกใหม่</h3>
@@ -427,7 +410,6 @@
         </div>
     </div>
 
-    <!-- ================= RECEIPTS MODAL ================= -->
     <div id="receiptModal" class="modal-overlay" style="z-index: 4000; flex-direction: column;">
         <div id="receiptBox" class="rcpt-container">
             <div style="text-align:center; margin-bottom:25px;">
@@ -461,7 +443,6 @@
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
     <script>
         // ---------------------------------------------------------
         // 🚨 นำลิงก์ Web App (Deploy) ล่าสุดของคุณมาใส่ในบรรทัดนี้ครับ 🚨
@@ -498,6 +479,7 @@
             document.getElementById('modalInput').value = "";
         }
 
+        // ================= ROUTING =================
         function switchAuthPanel(id) { 
             document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); 
             document.getElementById(id).classList.remove('hidden'); 
@@ -535,6 +517,15 @@
             let b = document.getElementById(id); 
             b.disabled = isLoad; 
             if(text) b.innerHTML = text; 
+        }
+        
+        function handleLogout() {
+            showModal('ออกจากระบบ', 'ต้องการออกจากระบบใช่หรือไม่?', true, () => { 
+                document.getElementById('loginForm').reset(); 
+                currentUserEmail = "";
+                currentUserRole = "";
+                showAppMode('auth'); 
+            });
         }
 
         // ================= AUTHENTICATION =================
@@ -669,6 +660,22 @@
                     loanHtml += `</div>`;
                 });
                 document.getElementById("loanActiveList").innerHTML = loanHtml || "<div style='text-align:center; padding:25px; color:rgba(255,255,255,0.5); font-size:14px;'>ยังไม่มีบัญชีสินเชื่อ</div>";
+
+                // Dividend Section
+                let divHtml = "";
+                (d.dividends || []).forEach(tx => { 
+                    let safeNotes = tx.notes ? tx.notes.replace(/'/g, "&#39;") : "{}";
+                    divHtml += `
+                    <div class="history-item">
+                        <div>
+                            <div style="font-size:15px; font-weight:500;">เงินปันผลประจำปี</div>
+                            <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-top:4px;">${tx.date}</div>
+                            <div onclick="openRcpt('Dividend', '${tx.txId}', '${tx.date}', ${tx.amount}, '${safeNotes}')" style="margin-top:10px; font-size:13px; color:#00E5FF; cursor:pointer; display:inline-block; padding:4px 8px; background:rgba(0,229,255,0.1); border-radius:6px;"><i class="ph ph-receipt"></i> ดูใบเสร็จปันผล</div>
+                        </div>
+                        <div style="font-weight:600; font-size:18px; color:#10B981;">+฿${tx.amount.toLocaleString()}</div>
+                    </div>`; 
+                });
+                document.getElementById("dividendList").innerHTML = divHtml || "<div style='text-align:center; padding:25px; color:rgba(255,255,255,0.5); font-size:14px;'>ยังไม่มีประวัติรับปันผล</div>";
             });
         }
 
