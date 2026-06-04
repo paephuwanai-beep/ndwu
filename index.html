@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบสหกรณ์ออมทรัพย์ออนไลน์</title>
-    <!-- ใช้ฟอนต์ Prompt เพื่อความทันสมัย -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- ใช้ Phosphor Icons สำหรับไอคอน -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         * {
@@ -146,7 +144,7 @@
             text-decoration: underline;
         }
 
-        /* Dashboard Styles */
+        /* Dashboard & Admin Styles */
         .dashboard-header {
             text-align: left;
             margin-bottom: 20px;
@@ -182,7 +180,6 @@
 </head>
 <body>
 
-    <!-- ================= 1. หน้าต่าง Login ================= -->
     <div class="glass-panel" id="loginPanel">
         <h2><i class="ph ph-shield-check"></i> เข้าสู่ระบบ</h2>
         <p class="subtitle">ระบบสหกรณ์ออมทรัพย์ออนไลน์</p>
@@ -205,7 +202,6 @@
         </div>
     </div>
 
-    <!-- ================= 2. หน้าต่าง สมัครสมาชิก ================= -->
     <div class="glass-panel hidden" id="registerPanel">
         <h2><i class="ph ph-user-plus"></i> สมัครสมาชิก</h2>
         <p class="subtitle">กรอกข้อมูลเพื่อขอรหัสยืนยัน OTP ทางอีเมล</p>
@@ -230,7 +226,6 @@
         <span class="link-center" onclick="showPanel('loginPanel')">มีบัญชีแล้ว? เข้าสู่ระบบ</span>
     </div>
 
-    <!-- ================= 3. หน้าต่าง ยืนยัน OTP (สำหรับการสมัคร) ================= -->
     <div class="glass-panel hidden" id="otpRegisterPanel">
         <h2><i class="ph ph-envelope-open"></i> ยืนยันอีเมล</h2>
         <p class="subtitle">ส่งรหัส OTP ไปที่ <br><strong id="displayRegEmail">...</strong> แล้ว</p>
@@ -246,7 +241,6 @@
         <span class="link-center" onclick="showPanel('registerPanel')">ย้อนกลับ</span>
     </div>
 
-    <!-- ================= 4. หน้าต่าง ลืมรหัสผ่าน (ขอ OTP) ================= -->
     <div class="glass-panel hidden" id="forgotPanel">
         <h2><i class="ph ph-lock-key"></i> ลืมรหัสผ่าน</h2>
         <p class="subtitle">กรอกอีเมลของคุณเพื่อรับรหัส OTP รีเซ็ตรหัสผ่าน</p>
@@ -262,7 +256,6 @@
         <span class="link-center" onclick="showPanel('loginPanel')">กลับไปหน้าเข้าสู่ระบบ</span>
     </div>
 
-    <!-- ================= 5. หน้าต่าง ตั้งรหัสผ่านใหม่ ================= -->
     <div class="glass-panel hidden" id="resetPasswordPanel">
         <h2><i class="ph ph-key"></i> ตั้งรหัสผ่านใหม่</h2>
         <p class="subtitle">กรอกรหัส OTP ที่ได้รับ และตั้งรหัสผ่านใหม่</p>
@@ -281,7 +274,6 @@
         <span class="link-center" onclick="showPanel('loginPanel')">ยกเลิก</span>
     </div>
 
-    <!-- ================= 6. หน้า Dashboard (เมื่อล็อกอินสำเร็จ) ================= -->
     <div class="glass-panel hidden" id="dashboardPanel">
         <div class="dashboard-header">
             <h3 id="dashName">ยินดีต้อนรับ, คุณ...</h3>
@@ -297,7 +289,22 @@
         <button style="background: rgba(244, 67, 54, 0.4);" onclick="logout()"><i class="ph ph-sign-out"></i> ออกจากระบบ</button>
     </div>
 
-    <!-- ================= Javascript Logic ================= -->
+    <div class="glass-panel hidden" id="adminPanel">
+        <div class="dashboard-header">
+            <h3><i class="ph ph-shield-star"></i> จัดการระบบ (Admin)</h3>
+            <p class="subtitle" style="margin: 0; color: #ffb74d;">สิทธิ์: ผู้ดูแลระบบ</p>
+        </div>
+        
+        <div class="balance-card" style="text-align: left; padding: 15px;">
+            <p style="margin-bottom: 10px; font-weight: 500;">สมาชิกที่รอการอนุมัติ:</p>
+            <div id="pendingUsersList" style="font-size: 14px;">
+                <div style="color: rgba(255,255,255,0.6);">กำลังโหลดข้อมูล...</div>
+            </div>
+        </div>
+
+        <button style="background: rgba(244, 67, 54, 0.4);" onclick="logout()"><i class="ph ph-sign-out"></i> ออกจากระบบ</button>
+    </div>
+
     <script>
         // URL จาก Google Apps Script (Web App) ของคุณ
         const API_URL = "https://script.google.com/macros/s/AKfycbwq_C39dHSoPqatT2Zemu3VobRnxViR53ebT1J4HdCvTaP9B3lsc4AqUgd-UttX_xYa/exec"; 
@@ -308,7 +315,7 @@
 
         // ฟังก์ชันสลับหน้าจอ
         function showPanel(panelId) {
-            const panels = ['loginPanel', 'registerPanel', 'otpRegisterPanel', 'forgotPanel', 'resetPasswordPanel', 'dashboardPanel'];
+            const panels = ['loginPanel', 'registerPanel', 'otpRegisterPanel', 'forgotPanel', 'resetPasswordPanel', 'dashboardPanel', 'adminPanel'];
             panels.forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
@@ -342,10 +349,17 @@
             .then(data => {
                 setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
                 if (data.status === "success") {
-                    document.getElementById("dashName").innerText = "ยินดีต้อนรับ, คุณ " + data.user.name;
-                    document.getElementById("dashRole").innerText = "สถานะ: " + (data.user.role === 'Admin' ? 'ผู้ดูแลระบบ' : 'สมาชิก');
-                    document.getElementById("dashBalance").innerText = "-"; // ดึงยอดจริงทีหลัง
-                    showPanel('dashboardPanel');
+                    if (data.user.role === 'Admin') {
+                        // ไปหน้า Admin
+                        showPanel('adminPanel');
+                        loadPendingUsers();
+                    } else {
+                        // ไปหน้า User
+                        document.getElementById("dashName").innerText = "ยินดีต้อนรับ, คุณ " + data.user.name;
+                        document.getElementById("dashRole").innerText = "สถานะ: " + (data.user.role === 'Admin' ? 'ผู้ดูแลระบบ' : 'สมาชิก');
+                        document.getElementById("dashBalance").innerText = "-"; // ดึงยอดจริงทีหลัง
+                        showPanel('dashboardPanel');
+                    }
                 } else {
                     alert(data.message);
                 }
@@ -359,7 +373,6 @@
         document.getElementById("registerForm").addEventListener("submit", (e) => {
             e.preventDefault();
             
-            // เก็บข้อมูลไว้ในตัวแปรชั่วคราว
             tempRegData = {
                 name: document.getElementById("regName").value,
                 email: document.getElementById("regEmail").value,
@@ -486,6 +499,56 @@
                 document.getElementById("loginForm").reset();
                 showPanel('loginPanel');
             }
+        }
+
+        // --- ฟังก์ชันโหลดรายชื่อคนรออนุมัติ (Admin) ---
+        function loadPendingUsers() {
+            const listDiv = document.getElementById("pendingUsersList");
+            listDiv.innerHTML = '<div style="color: rgba(255,255,255,0.6);">กำลังโหลดข้อมูล...</div>';
+
+            const payload = new URLSearchParams();
+            payload.append("action", "get_pending_users");
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success" && data.users.length > 0) {
+                    let html = "";
+                    data.users.forEach(u => {
+                        html += `
+                        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 500;">${u.name}</div>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.7);">${u.email}</div>
+                            </div>
+                            <button onclick="approveUser('${u.email}')" style="width: auto; padding: 5px 10px; margin: 0; font-size: 12px; background: rgba(76, 175, 80, 0.6);">อนุมัติ</button>
+                        </div>`;
+                    });
+                    listDiv.innerHTML = html;
+                } else {
+                    listDiv.innerHTML = '<div style="color: rgba(255,255,255,0.6);">ไม่มีสมาชิกที่รออนุมัติในขณะนี้</div>';
+                }
+            });
+        }
+
+        // --- ฟังก์ชันกดอนุมัติ (Admin) ---
+        function approveUser(email) {
+            if(!confirm("ยืนยันการอนุมัติผู้ใช้: " + email)) return;
+            
+            const payload = new URLSearchParams();
+            payload.append("action", "approve_user");
+            payload.append("target_email", email);
+
+            fetch(API_URL, { method: "POST", body: payload })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    alert("อนุมัติสำเร็จ!");
+                    loadPendingUsers(); // โหลดข้อมูลใหม่
+                } else {
+                    alert("ข้อผิดพลาด: " + data.message);
+                }
+            });
         }
     </script>
 </body>
