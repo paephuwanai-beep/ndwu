@@ -65,7 +65,6 @@
         .nav-item i { font-size: 24px; }
         .nav-item.active { color: #64ffda; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5); }
         
-        /* Admin Tabs Layout */
         .admin-tab-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .admin-tab { flex: 1 1 45%; padding: 12px 10px; text-align: center; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; font-size: 13px; transition: 0.3s;}
         .admin-tab.active { background: #64ffda; color: #0a192f; font-weight: 600; box-shadow: 0 4px 10px rgba(100,255,218,0.3); }
@@ -77,7 +76,6 @@
 </head>
 <body>
 
-    <!-- ================= AUTH SECTION ================= -->
     <div class="auth-wrapper" id="authWrapper">
         <div class="glass-panel" id="loginPanel">
             <h2><i class="ph ph-shield-check"></i> เข้าสู่ระบบ</h2>
@@ -139,11 +137,12 @@
         </div>
     </div>
 
-    <!-- ================= APP SECTION ================= -->
     <div class="app-wrapper hidden" id="appWrapper">
-        <div class="top-bar"><div class="logo">my NDAD <span>pro</span></div><i class="ph ph-bell" style="font-size: 24px;"></i></div>
+        <div class="top-bar">
+            <div class="logo">my NDAD <span>pro</span></div>
+            <i class="ph ph-bell" style="font-size: 24px;"></i>
+        </div>
         <div class="container">
-            <!-- หน้าแรก -->
             <div id="page-home" class="page-section active">
                 <div class="glass-card account-card">
                     <div class="acc-name" id="accName">คุณ ...</div>
@@ -159,7 +158,6 @@
                 <div class="history-list" id="recentHistoryList"></div>
             </div>
 
-            <!-- หน้าฝากเงิน -->
             <div id="page-deposit" class="page-section">
                 <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงิน</h3>
                 <div class="glass-card" style="padding: 25px 20px;">
@@ -178,15 +176,18 @@
                 </div>
             </div>
 
-            <!-- หน้าปันผล -->
             <div id="page-dividend" class="page-section">
                 <h3 class="section-title"><i class="ph ph-chart-line-up"></i> ประวัติปันผลย้อนหลัง</h3>
                 <div class="history-list" id="dividendList"></div>
             </div>
 
-            <!-- หน้าเมนู -->
             <div id="page-more" class="page-section">
                 <h3 class="section-title">เมนูเพิ่มเติม</h3>
+                
+                <button class="glass-card list-btn hidden" id="switchToAdminBtn" style="border-left: 4px solid #fdbb2d; margin-bottom: 15px;" onclick="switchToAdminMode()">
+                    <div><i class="ph ph-shield-star" style="color: #fdbb2d;"></i> สลับเป็นหน้าจัดการ (Admin)</div>
+                </button>
+
                 <button class="glass-card list-btn"><div><i class="ph ph-sliders"></i> ปรับการลงทุน</div></button>
                 <button class="glass-card list-btn"><div><i class="ph ph-headset"></i> ติดต่อเจ้าหน้าที่</div></button>
                 <button class="glass-card list-btn" style="background: rgba(244, 67, 54, 0.1); color: #e57373; margin-top: 20px;" onclick="logout()"><div><i class="ph ph-sign-out"></i> ออกจากระบบ</div></button>
@@ -200,39 +201,39 @@
         </div>
     </div>
 
-    <!-- ================= ADMIN SECTION ================= -->
     <div class="app-wrapper hidden" id="adminWrapper">
         <div class="top-bar">
             <div class="logo">Admin <span>Panel</span></div>
-            <i class="ph ph-sign-out" style="font-size: 24px; cursor: pointer; color: #e57373;" onclick="logout()"></i>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <div style="font-size: 13px; color: #64ffda; cursor: pointer; display: flex; align-items: center; gap: 5px; background: rgba(100,255,218,0.1); padding: 5px 10px; border-radius: 8px;" onclick="switchToUserMode()">
+                    <i class="ph ph-user-switch" style="font-size: 18px;"></i> หน้าสมาชิก
+                </div>
+                <i class="ph ph-sign-out" style="font-size: 24px; cursor: pointer; color: #e57373;" onclick="logout()"></i>
+            </div>
         </div>
         <div class="container">
             <div class="admin-tab-btns">
                 <div class="admin-tab active" id="tabUsers" onclick="switchAdminTab('users')">สมาชิกรออนุมัติ</div>
                 <div class="admin-tab" id="tabDeposits" onclick="switchAdminTab('deposits')">ตรวจสอบสลิป</div>
                 <div class="admin-tab" id="tabManage" onclick="switchAdminTab('manage')">จัดการสมาชิก</div>
-                <div class="admin-tab" id="tabPerformance" onclick="switchAdminTab('performance')">ผลประกอบการ/ปันผล</div>
+                <div class="admin-tab" id="tabPerformance" onclick="switchAdminTab('performance')">ผลประกอบการ</div>
             </div>
 
-            <!-- Tab 1: รออนุมัติ -->
             <div class="glass-card" style="padding: 20px;" id="adminContentUsers">
                 <h3 class="section-title">คำขอสมัครสมาชิกใหม่</h3>
                 <div id="pendingUsersList" style="display: flex; flex-direction: column; gap: 10px;"></div>
             </div>
 
-            <!-- Tab 2: ตรวจสอบสลิป -->
             <div class="glass-card hidden" style="padding: 20px;" id="adminContentDeposits">
                 <h3 class="section-title">รายการแจ้งฝากเงินรอดำเนินการ</h3>
                 <div id="pendingDepositsList" style="display: flex; flex-direction: column; gap: 10px;"></div>
             </div>
 
-            <!-- Tab 3: จัดการสมาชิก -->
             <div class="glass-card hidden" style="padding: 20px;" id="adminContentManage">
                 <h3 class="section-title">รายชื่อสมาชิกทั้งหมด</h3>
                 <div id="allMembersList" style="display: flex; flex-direction: column; gap: 10px;"></div>
             </div>
 
-            <!-- Tab 4: ผลประกอบการและปันผล -->
             <div class="hidden" id="adminContentPerformance">
                 <div class="glass-card" style="padding: 20px; margin-bottom: 20px;">
                     <h3 class="section-title"><i class="ph ph-file-text"></i> บันทึกผลประกอบการ</h3>
@@ -250,7 +251,7 @@
                     <h3 class="section-title" style="color: #64ffda;"><i class="ph ph-gift"></i> คำนวณแจกจ่ายปันผล</h3>
                     <form id="divForm">
                         <div class="input-group"><label>อัตราเงินปันผล (%)</label><input type="number" step="0.01" id="divPercent" placeholder="เช่น 5.5" required style="font-size: 20px; font-weight: bold;"></div>
-                        <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">*ระบบจะคำนวณจากยอดเงินสะสมปัจจุบันของบัญชีที่อนุมัติแล้ว และเพิ่มยอดเข้าบัญชีทุกคนทันที</p>
+                        <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">*ระบบจะคำนวณจากยอดเงินสะสมปัจจุบัน และเพิ่มยอดเข้าบัญชีทุกคนทันที</p>
                         <button type="submit" class="btn-primary" id="divBtn" style="background: rgba(76, 175, 80, 0.5);">คำนวณและจ่ายเงินทันที</button>
                     </form>
                 </div>
@@ -258,11 +259,10 @@
         </div>
     </div>
 
-    <!-- ================= Javascript Logic ================= -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec"; // <--- เปลี่ยนลิงก์
+        const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec";
         
-        let tempRegData = {}; let tempForgotEmail = ""; let currentUserEmail = "";
+        let tempRegData = {}; let tempForgotEmail = ""; let currentUserEmail = ""; let currentUserRole = "";
 
         // UI Routing
         function switchAuthPanel(id) { document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
@@ -285,6 +285,10 @@
             if(mode === 'user') document.getElementById('appWrapper').classList.remove('hidden');
             if(mode === 'admin') document.getElementById('adminWrapper').classList.remove('hidden');
         }
+        
+        function switchToAdminMode() { showAppMode('admin'); loadAdminData(); }
+        function switchToUserMode() { showAppMode('user'); loadDashboardData(); }
+
         function setLoading(btnId, loadingId, isLoading, text = "") {
             const btn = document.getElementById(btnId); const loading = document.getElementById(loadingId);
             btn.disabled = isLoading; loading.style.display = isLoading ? 'block' : 'none'; if(text && !isLoading) btn.innerHTML = text;
@@ -298,8 +302,18 @@
                 setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
                 if (data.status === "success") {
                     currentUserEmail = data.user.email;
-                    if (data.user.role.toLowerCase() === 'admin') { showAppMode('admin'); loadAdminData(); } 
-                    else { document.getElementById("accName").innerText = "คุณ " + data.user.name; document.getElementById("accId").innerText = "เลขบัญชี: " + data.user.userId; showAppMode('user'); loadDashboardData(); }
+                    currentUserRole = data.user.role;
+                    
+                    document.getElementById("accName").innerText = "คุณ " + data.user.name; 
+                    document.getElementById("accId").innerText = "เลขบัญชี: " + data.user.userId;
+
+                    if (currentUserRole.toLowerCase() === 'admin') { 
+                        document.getElementById("switchToAdminBtn").classList.remove("hidden");
+                        switchToAdminMode(); 
+                    } else { 
+                        document.getElementById("switchToAdminBtn").classList.add("hidden");
+                        switchToUserMode(); 
+                    }
                 } else alert(data.message);
             }).catch(e => { alert("ขัดข้อง"); setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ'); });
         });
@@ -335,7 +349,6 @@
             fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => {
                 if(data.status === "success") {
                     document.getElementById("accBalance").innerText = data.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
-                    
                     const histDiv = document.getElementById("recentHistoryList");
                     if(data.history.length > 0) {
                         let html = "";
@@ -343,7 +356,6 @@
                             let icon = "ph-wallet"; let color = "#ffca28"; let iconClass = "pend"; let sign = ""; let statusText = "รอดำเนินการ";
                             if(tx.status === "Approved") { statusText = "สำเร็จ"; color = "#81c784"; iconClass = "in"; sign = "+"; icon = tx.type === "Dividend" ? "ph-gift" : "ph-download-simple"; } 
                             else if (tx.status === "Rejected") { statusText = "ปฏิเสธ"; color = "#e57373"; iconClass = "out"; }
-                            
                             html += `<div class="glass-card history-item"><div style="display: flex; gap: 15px; align-items: center;"><div class="hist-icon ${iconClass}"><i class="ph ${icon}"></i></div><div><div style="font-weight: 500;">${tx.type === "Deposit" ? "ฝากเงิน" : "เงินปันผล"} <span style="font-size:10px; padding:2px 5px; background:rgba(255,255,255,0.1); border-radius:4px;">${statusText}</span></div><div style="font-size: 12px; color: rgba(255,255,255,0.6);">${tx.date}</div></div></div><div style="font-weight: 500; color: ${color};">${sign}${tx.amount.toLocaleString()}</div></div>`;
                         });
                         histDiv.innerHTML = html;
@@ -383,17 +395,14 @@
             const payload = new URLSearchParams(); payload.append("action", "admin_get_all_data");
             fetch(API_URL, { method: "POST", body: payload }).then(r => r.json()).then(data => {
                 if(data.status === "success") {
-                    // รออนุมัติ
                     let uHtml = data.pendingUsers.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีสมาชิกรออนุมัติ</div>";
                     data.pendingUsers.forEach(u => { uHtml += `<div class="admin-item-row"><div style="display:flex; justify-content:space-between; align-items:center;"><div><div style="font-weight: 500;">${u.name}</div><div style="font-size: 12px; color: rgba(255,255,255,0.7);">${u.email}</div></div><button onclick="updateUserStatus('${u.email}', 'Approved')" class="admin-btn btn-green">อนุมัติ</button></div></div>`; });
                     document.getElementById("pendingUsersList").innerHTML = uHtml;
 
-                    // สลิป
                     let dHtml = data.deposits.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีรายการแจ้งฝาก</div>";
                     data.deposits.forEach(d => { dHtml += `<div class="admin-item-row"><div style="display:flex; justify-content:space-between; margin-bottom:10px;"><div style="font-size:12px; color:rgba(255,255,255,0.7);">${d.date}<br>${d.email}</div><div style="font-weight:600; color:#ffca28;">฿ ${d.amount.toLocaleString()}</div></div><a href="${d.slipUrl}" target="_blank" style="display:block; text-align:center; padding:8px; background:rgba(255,255,255,0.1); border-radius:8px; color:#90caf9; text-decoration:none; margin-bottom:10px; font-size:14px;"><i class="ph ph-image"></i> ดูรูปสลิป</a><div style="display:flex; gap:10px;"><button onclick="verifyDeposit('${d.txId}', 'Approved')" class="admin-btn btn-green" style="flex:1;">ยืนยันยอด</button><button onclick="verifyDeposit('${d.txId}', 'Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`; });
                     document.getElementById("pendingDepositsList").innerHTML = dHtml;
 
-                    // สมาชิกทั้งหมด
                     let mHtml = data.allMembers.length > 0 ? "" : "<div style='text-align:center; color:rgba(255,255,255,0.5);'>ไม่มีสมาชิก</div>";
                     data.allMembers.forEach(m => {
                         let btn = m.status === 'Blocked' ? `<button onclick="updateUserStatus('${m.email}', 'Approved')" class="admin-btn btn-green">ปลดบล็อก</button>` : `<button onclick="updateUserStatus('${m.email}', 'Blocked')" class="admin-btn btn-red">ระงับใช้งาน</button>`;
@@ -434,7 +443,7 @@
             fetch(API_URL, { method: "POST", body: p }).then(r => r.json()).then(d => { btn.disabled = false; btn.innerText = "คำนวณและจ่ายเงินทันที"; if(d.status==="success") { alert(d.message); document.getElementById("divForm").reset(); } });
         });
 
-        function logout() { if(confirm("ต้องการออกจากระบบใช่หรือไม่?")) { document.getElementById("loginForm").reset(); currentUserEmail = ""; showAppMode('auth'); } }
+        function logout() { if(confirm("ต้องการออกจากระบบใช่หรือไม่?")) { document.getElementById("loginForm").reset(); currentUserEmail = ""; currentUserRole = ""; showAppMode('auth'); } }
     </script>
 </body>
 </html>
