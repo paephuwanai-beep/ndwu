@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        /* ================= RESET & BASE ================= */
         * { box-sizing: border-box; font-family: 'Prompt', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { 
             background: linear-gradient(135deg, #0B192C, #1A365D, #1E3A8A); 
@@ -23,13 +22,11 @@
         }
         .hidden { display: none !important; }
 
-        /* ================= TYPOGRAPHY & LOGO ================= */
-        .app-logo { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; display: flex; flex-direction: column; line-height: 1.1; }
+        .app-logo { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; display: flex; flex-direction: column; line-height: 1.1; }
         .app-logo .main-text { color: #ffffff; } 
         .app-logo .pro-text { color: #00E5FF; font-size: 20px; margin-left: 4px; }
-        .app-logo .sub-text { font-size: 10px; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 4px; letter-spacing: 0.5px; }
+        .app-logo .sub-text { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.7); margin-top: 6px; letter-spacing: 0.3px; }
 
-        /* ================= GLASSMORPHISM CLASSES ================= */
         .glass-panel { 
             width: 100%; max-width: 420px; margin: auto;
             background: rgba(255, 255, 255, 0.08); 
@@ -46,7 +43,6 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); 
         }
 
-        /* ================= FORMS & INPUTS ================= */
         .input-group { margin-bottom: 16px; text-align: left; }
         .input-group label { display: block; font-size: 13px; margin-bottom: 8px; color: rgba(255,255,255,0.8); font-weight: 400; }
         input { 
@@ -55,7 +51,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; 
         }
         input:focus { background: rgba(0, 0, 0, 0.4); border-color: #00E5FF; outline: none; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
-        input::placeholder { color: rgba(255,255,255,0.4); }
         .pin-input { letter-spacing: 8px; text-align: center; font-weight: bold; font-size: 20px; }
 
         button.btn-primary { 
@@ -67,7 +62,6 @@
         button.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 180, 219, 0.5); }
         button.btn-primary:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); box-shadow: none; cursor: not-allowed; }
 
-        /* ================= LAYOUT & NAVIGATION ================= */
         .auth-wrapper { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
         .app-wrapper { padding-bottom: 100px; }
         .container { padding: 20px; max-width: 550px; margin: 0 auto; }
@@ -93,7 +87,6 @@
         .bell-container:hover { background: rgba(255,255,255,0.1); }
         .bell-badge { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: #FF3B30; border-radius: 50%; display: none; box-shadow: 0 0 8px #FF3B30; }
 
-        /* ================= APP COMPONENTS ================= */
         .page-section, .admin-content-section { display: none; animation: fadeIn 0.4s ease; }
         .page-section.active, .admin-content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -121,7 +114,6 @@
         .history-item { padding: 18px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
         .hist-icon { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
 
-        /* ================= MODAL & POPUP ================= */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal-box { background: #0B192C; border: 1px solid rgba(0,229,255,0.3); border-radius: 24px; padding: 35px 25px; width: 100%; max-width: 340px; text-align: center; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
@@ -134,7 +126,6 @@
         .rcpt-row { font-size: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; }
         .rcpt-lbl { color: #666; } .rcpt-val { font-weight: 600; color: #111; text-align: right; }
 
-        /* ================= ADMIN TABS ================= */
         .admin-tab-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 25px; }
         .admin-tab { padding: 12px 16px; text-align: center; background: rgba(255,255,255,0.08); border-radius: 12px; cursor: pointer; font-size: 13px; color: rgba(255,255,255,0.7); border: 1px solid transparent; transition: 0.3s; flex-grow: 1; }
         .admin-tab.active { background: rgba(0,229,255,0.15); color: #00E5FF; border-color: rgba(0,229,255,0.5); font-weight: 500; }
@@ -165,7 +156,7 @@
             <div style="margin-bottom: 35px;">
                 <div class="app-logo">
                     <div><span class="main-text">my NDAD</span><span class="pro-text">pro</span></div>
-                    <div class="sub-text">สอ.รร.นางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
+                    <div class="sub-text">สหกรณ์ออมทรัพย์ โรงเรียนนางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
                 </div>
             </div>
             <form id="loginForm">
@@ -173,7 +164,7 @@
                 <div class="input-group"><input type="password" id="loginPassword" placeholder="รหัสผ่าน" required></div>
                 <button type="submit" class="btn-primary" id="loginBtn">เข้าสู่ระบบ</button>
             </form>
-            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 13px;">
+            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 14px;">
                 <span style="color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('forgotPanel')">ลืมรหัสผ่าน?</span>
                 <span style="color: #00E5FF; cursor: pointer; font-weight: 500;" onclick="switchAuthPanel('registerPanel')">สมัครสมาชิกใหม่</span>
             </div>
@@ -414,7 +405,7 @@
         <div id="receiptBox" class="rcpt-container">
             <div style="text-align:center; margin-bottom:25px;">
                 <div style="font-size:26px; font-weight:700; color:#0B192C;">my NDAD <span style="color:#10B981;">pro</span></div>
-                <div style="font-size:12px; color:#666; margin-top: 5px;">สอ.รร.นางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
+                <div style="font-size:11px; color:#666; margin-top: 5px;">สหกรณ์ออมทรัพย์ โรงเรียนนางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
                 <div id="rTitle" style="font-size:16px; font-weight:600; color:#333; margin-top: 12px;">ใบเสร็จรับเงิน</div>
             </div>
             <div style="border-top:1px dashed #ddd; margin:20px 0;"></div>
@@ -434,7 +425,12 @@
                 <p style="font-size: 14px; color: #666; margin-bottom: 5px;" id="rTotalLbl">จำนวนเงินฝากออมทรัพย์ (THB)</p>
                 <h2 style="color:#0B192C; font-size: 36px; margin: 0;" id="rTotal"></h2>
             </div>
-            <div style="text-align: center; font-size: 11px; color: #999;">เอกสารฉบับนี้สร้างโดยระบบอัตโนมัติ</div>
+            
+            <div id="rContactExtra" class="hidden" style="text-align: center; font-size: 11px; color: #555; margin-bottom: 10px;">
+                ติดต่อผู้ดูแลบัญชี: กรรมการผู้ดูแลบัญชีออมทรัพย์
+            </div>
+            
+            <div style="text-align: center; font-size: 10px; color: #999;">เอกสารฉบับนี้สร้างโดยระบบอัตโนมัติ</div>
         </div>
         
         <div style="display:flex; gap:15px; margin-top:30px; width:100%; max-width:380px;">
@@ -444,14 +440,11 @@
     </div>
 
     <script>
-        // ---------------------------------------------------------
-        // 🚨 นำลิงก์ Web App (Deploy) ล่าสุดของคุณมาใส่ในบรรทัดนี้ครับ 🚨
         const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec"; 
-        // ---------------------------------------------------------
-
+        
         let currentUserEmail = "", currentUserRole = "";
 
-        // ================= UI & MODAL SYSTEM =================
+        // UI System
         let confirmCallback = null;
         function showModal(title, desc, isConfirm=false, onConfirm=null) {
             document.getElementById('modalTitle').innerText = title; 
@@ -479,7 +472,7 @@
             document.getElementById('modalInput').value = "";
         }
 
-        // ================= ROUTING =================
+        // Routing
         function switchAuthPanel(id) { 
             document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); 
             document.getElementById(id).classList.remove('hidden'); 
@@ -522,13 +515,12 @@
         function handleLogout() {
             showModal('ออกจากระบบ', 'ต้องการออกจากระบบใช่หรือไม่?', true, () => { 
                 document.getElementById('loginForm').reset(); 
-                currentUserEmail = "";
-                currentUserRole = "";
+                currentUserEmail = ""; currentUserRole = "";
                 showAppMode('auth'); 
             });
         }
 
-        // ================= AUTHENTICATION =================
+        // Auth Logic
         document.getElementById("loginForm").addEventListener("submit", e => { 
             e.preventDefault(); 
             setBtn('loginBtn', true, 'กำลังตรวจสอบข้อมูล...');
@@ -555,7 +547,7 @@
             });
         });
 
-        // ================= USER DASHBOARD =================
+        // User Data
         function loadDashboardData() {
             fetch(API_URL, { 
                 method: "POST", 
@@ -616,7 +608,7 @@
                 document.getElementById("archiveReceiptList").innerHTML = rcptHtml || "<div style='text-align:center; padding: 25px; color:rgba(255,255,255,0.5); font-size:14px;'>ไม่มีใบเสร็จในคลัง</div>";
                 document.getElementById("notifyList").innerHTML = notiHtml || "<div style='text-align:center; padding: 25px; color:rgba(255,255,255,0.5); font-size:14px;'>ไม่มีการแจ้งเตือน</div>";
 
-                // Loan Section
+                // Loan Data
                 let loanHtml = "";
                 (d.loans || []).forEach(l => {
                     let st = l.status==="Approved" ? "กำลังผ่อน" : l.status==="Rejected" ? "ไม่อนุมัติ" : "รอพิจารณา";
@@ -661,7 +653,7 @@
                 });
                 document.getElementById("loanActiveList").innerHTML = loanHtml || "<div style='text-align:center; padding:25px; color:rgba(255,255,255,0.5); font-size:14px;'>ยังไม่มีบัญชีสินเชื่อ</div>";
 
-                // Dividend Section
+                // Dividend Data
                 let divHtml = "";
                 (d.dividends || []).forEach(tx => { 
                     let safeNotes = tx.notes ? tx.notes.replace(/'/g, "&#39;") : "{}";
@@ -679,7 +671,6 @@
             });
         }
 
-        // ================= UPLOAD ACTIONS =================
         function handleUpload(e, btnId, amtId, slipId, type, refId="") {
             e.preventDefault(); 
             const amt = document.getElementById(amtId).value; 
@@ -721,7 +712,7 @@
                 body: new URLSearchParams({ action: "request_loan", email: currentUserEmail, amount: document.getElementById("reqLoanAmt").value }) 
             })
             .then(r=>r.json()).then(d => { 
-                setBtn('reqLoanBtn', false, "ส่งคำขอกู้"); 
+                setBtn('reqLoanBtn', false, "ยื่นคำขอกู้"); 
                 showModal("แจ้งสถานะ", d.message); 
                 if(d.status === "success"){ 
                     e.target.reset(); 
@@ -736,7 +727,7 @@
             switchAppPage('page-pay-loan'); 
         }
 
-        // ================= ADMIN FUNCTIONS =================
+        // Admin
         function loadAdminData() {
             fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_get_all_data" }) })
             .then(r=>r.json()).then(d => {
@@ -791,7 +782,7 @@
             });
         }
 
-        // ================= RECEIPT GENERATOR =================
+        // Receipt Generation
         function openRcpt(type, id, date, amt, notes) {
             document.getElementById('rId').innerText = id; 
             document.getElementById('rDate').innerText = date; 
@@ -803,6 +794,7 @@
                 document.getElementById('rTitle').style.color = "#1A365D";
                 document.getElementById('rTotalLbl').innerText = "จำนวนเงินฝากออมทรัพย์ (THB)";
                 document.getElementById('rDivExtra').classList.add('hidden'); 
+                document.getElementById('rContactExtra').classList.add('hidden');
             } else {
                 document.getElementById('rTitle').innerText = "ใบเสร็จรับเงินปันผล"; 
                 document.getElementById('rTitle').style.color = "#10B981";
@@ -817,6 +809,7 @@
                 document.getElementById('rDed').innerText = `หักองค์กร (${n.deductPercent}%):`; 
                 document.getElementById('rDedA').innerText = "-" + parseFloat(n.deductAmount||0).toLocaleString('en-US', {minimumFractionDigits: 2});
                 document.getElementById('rDivExtra').classList.remove('hidden'); 
+                document.getElementById('rContactExtra').classList.remove('hidden');
             }
             document.getElementById('receiptModal').classList.add('show');
         }
