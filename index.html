@@ -3,28 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบสหกรณ์ออมทรัพย์ออนไลน์</title>
+    <title>my NDAD pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; font-family: 'Prompt', sans-serif; margin: 0; padding: 0; }
+        
         body {
-            /* พื้นหลังสีน้ำเงินเข้มหรูหรา */
-            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364);
+            /* โทนสี น้ำเงิน-ฟ้า-ขาว */
+            background: linear-gradient(135deg, #0a192f, #112240, #203a43, #1e3c72, #2a5298);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             color: #fff;
-            padding: 20px;
+            min-height: 100vh;
+            padding-bottom: 80px; /* เว้นที่ให้ Bottom Nav */
         }
 
         @keyframes gradientBG {
@@ -33,522 +25,240 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* กล่องสไตล์กระจก (Glassmorphism) */
-        .glass-panel {
-            width: 100%;
-            max-width: 420px;
+        /* Glassmorphism Class หลัก */
+        .glass-card {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            padding: 35px 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            transition: all 0.3s ease;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
 
-        /* ซ่อน panel ที่ไม่ได้ใช้งาน */
-        .hidden {
-            display: none !important;
-        }
-
-        h2 { margin-bottom: 8px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        p.subtitle { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 25px; line-height: 1.5; }
-
-        .input-group {
-            margin-bottom: 12px;
-            position: relative;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px 15px;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            border: 1px solid transparent;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
-        }
-
-        input::placeholder { color: rgba(255, 255, 255, 0.6); }
-
-        .pin-input {
-            letter-spacing: 5px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.25);
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        button:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        button:disabled {
-            background: rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.4);
-            cursor: not-allowed;
-        }
-
-        .links-container {
+        /* Top Bar */
+        .top-bar {
+            padding: 20px;
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
-            font-size: 14px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .link-text {
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            text-decoration: underline;
-            transition: 0.2s;
-        }
+        .logo { font-size: 20px; font-weight: 600; color: #ffffff; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .logo span { color: #64ffda; } /* ไฮไลท์คำว่า pro */
 
-        .link-text:hover { color: #fff; }
+        /* Content Container */
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .page-section { display: none; animation: fadeIn 0.3s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .link-center {
-            display: block;
-            margin-top: 20px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            text-decoration: underline;
+        /* บัตรบัญชี (Account Card) */
+        .account-card { padding: 25px; margin-bottom: 20px; position: relative; overflow: hidden; }
+        .account-card::before {
+            content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%); border-radius: 50%;
         }
+        .acc-name { font-size: 18px; font-weight: 500; margin-bottom: 5px; }
+        .acc-no { font-size: 14px; color: rgba(255,255,255,0.7); letter-spacing: 2px; margin-bottom: 20px; }
+        .acc-balance-title { font-size: 12px; color: rgba(255,255,255,0.8); }
+        .acc-balance { font-size: 32px; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
 
-        /* Dashboard & Admin Styles */
-        .dashboard-header {
-            text-align: left;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 15px;
+        /* รายการประวัติ (Transactions) */
+        .section-title { font-size: 16px; font-weight: 500; margin: 20px 0 15px 0; display: flex; align-items: center; gap: 8px; }
+        .history-list { display: flex; flex-direction: column; gap: 12px; }
+        .history-item {
+            padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center;
         }
+        .hist-icon {
+            width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px;
+        }
+        .hist-icon.in { background: rgba(76, 175, 80, 0.2); color: #81c784; }
+        .hist-icon.out { background: rgba(244, 67, 54, 0.2); color: #e57373; }
         
-        .balance-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
-            border-radius: 16px;
-            padding: 25px 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            position: relative;
-            overflow: hidden;
+        /* ปุ่มต่างๆ */
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .menu-btn {
+            padding: 20px 10px; border: none; border-radius: 15px; background: rgba(255,255,255,0.1); color: #fff;
+            font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s;
         }
+        .menu-btn i { font-size: 28px; color: #90caf9; }
+        .menu-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
 
-        .balance-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            pointer-events: none;
+        .list-btn {
+            width: 100%; padding: 18px 20px; margin-bottom: 12px; border: none; border-radius: 15px;
+            background: rgba(255,255,255,0.1); color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; transition: 0.3s;
         }
+        .list-btn div { display: flex; align-items: center; gap: 15px; }
+        .list-btn i { font-size: 24px; color: #90caf9; }
+        .list-btn:hover { background: rgba(255,255,255,0.2); }
 
-        .balance-amount {
-            font-size: 36px;
-            font-weight: 600;
-            margin: 10px 0;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+            background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 1000; padding-bottom: env(safe-area-inset-bottom);
         }
-
-        .loading-text { display: none; margin-top: 15px; font-size: 14px; color: #a8e6cf; }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            color: rgba(255, 255, 255, 0.5); font-size: 12px; cursor: pointer; transition: 0.3s; width: 25%;
+        }
+        .nav-item i { font-size: 24px; }
+        .nav-item.active { color: #64ffda; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5); }
+        .nav-item.active i { font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel" id="loginPanel">
-        <h2><i class="ph ph-shield-check"></i> เข้าสู่ระบบ</h2>
-        <p class="subtitle">ระบบสหกรณ์ออมทรัพย์ออนไลน์</p>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="email" id="loginEmail" placeholder="อีเมล (Email)" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="loginPassword" placeholder="รหัสผ่าน" required>
-            </div>
-            <button type="submit" id="loginBtn">เข้าสู่ระบบ <i class="ph ph-sign-in"></i></button>
-        </form>
-        
-        <div class="loading-text" id="loginLoading">กำลังตรวจสอบข้อมูล...</div>
-        
-        <div class="links-container">
-            <span class="link-text" onclick="showPanel('forgotPanel')">ลืมรหัสผ่าน?</span>
-            <span class="link-text" onclick="showPanel('registerPanel')">สมัครสมาชิกใหม่</span>
-        </div>
+    <div class="top-bar">
+        <div class="logo">my NDAD <span>pro</span></div>
+        <i class="ph ph-bell" style="font-size: 24px;"></i>
     </div>
 
-    <div class="glass-panel hidden" id="registerPanel">
-        <h2><i class="ph ph-user-plus"></i> สมัครสมาชิก</h2>
-        <p class="subtitle">กรอกข้อมูลเพื่อขอรหัสยืนยัน OTP ทางอีเมล</p>
+    <div class="container">
         
-        <form id="registerForm">
-            <div class="input-group">
-                <input type="text" id="regName" placeholder="ชื่อ-นามสกุลจริง" required>
+        <div id="page-home" class="page-section active">
+            <div class="glass-card account-card">
+                <div class="acc-name">คุณ ภูวนัย</div>
+                <div class="acc-no">เลขบัญชี: NDAD-001234</div>
+                <div class="acc-balance-title">ยอดเงินออมสะสม (THB)</div>
+                <div class="acc-balance">฿ 45,200.00</div>
             </div>
-            <div class="input-group">
-                <input type="email" id="regEmail" placeholder="อีเมล (สำหรับรับ OTP)" required>
+
+            <div class="menu-grid">
+                <button class="glass-card menu-btn" onclick="switchPage('page-deposit')">
+                    <i class="ph ph-wallet"></i> ฝากเงิน/จ่ายออม
+                </button>
+                <button class="glass-card menu-btn" onclick="switchPage('page-dividend')">
+                    <i class="ph ph-chart-line-up"></i> ปันผลย้อนหลัง
+                </button>
             </div>
-            <div class="input-group">
-                <input type="password" id="regPassword" placeholder="ตั้งรหัสผ่าน" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="regPin" class="pin-input" placeholder="ตั้งรหัส PIN 6 หลัก" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" title="รหัส PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น" required>
-            </div>
-            <button type="submit" id="regBtn">ขอรหัส OTP <i class="ph ph-paper-plane-right"></i></button>
-        </form>
 
-        <div class="loading-text" id="regLoading">กำลังส่งรหัส OTP ไปยังอีเมล...</div>
-        <span class="link-center" onclick="showPanel('loginPanel')">มีบัญชีแล้ว? เข้าสู่ระบบ</span>
-    </div>
-
-    <div class="glass-panel hidden" id="otpRegisterPanel">
-        <h2><i class="ph ph-envelope-open"></i> ยืนยันอีเมล</h2>
-        <p class="subtitle">ส่งรหัส OTP ไปที่ <br><strong id="displayRegEmail">...</strong> แล้ว</p>
-        
-        <form id="otpRegisterForm">
-            <div class="input-group">
-                <input type="text" id="regOtpCode" class="pin-input" placeholder="กรอกรหัส 6 หลัก" inputmode="numeric" maxlength="6" required style="font-size: 24px; letter-spacing: 8px;">
-            </div>
-            <button type="submit" id="verifyRegBtn">ยืนยันการสมัคร <i class="ph ph-check-circle"></i></button>
-        </form>
-
-        <div class="loading-text" id="otpRegLoading">กำลังตรวจสอบรหัส OTP...</div>
-        <span class="link-center" onclick="showPanel('registerPanel')">ย้อนกลับ</span>
-    </div>
-
-    <div class="glass-panel hidden" id="forgotPanel">
-        <h2><i class="ph ph-lock-key"></i> ลืมรหัสผ่าน</h2>
-        <p class="subtitle">กรอกอีเมลของคุณเพื่อรับรหัส OTP รีเซ็ตรหัสผ่าน</p>
-        
-        <form id="forgotForm">
-            <div class="input-group">
-                <input type="email" id="forgotEmail" placeholder="อีเมลที่ใช้สมัคร" required>
-            </div>
-            <button type="submit" id="forgotBtn">ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i></button>
-        </form>
-
-        <div class="loading-text" id="forgotLoading">กำลังตรวจสอบและส่งอีเมล...</div>
-        <span class="link-center" onclick="showPanel('loginPanel')">กลับไปหน้าเข้าสู่ระบบ</span>
-    </div>
-
-    <div class="glass-panel hidden" id="resetPasswordPanel">
-        <h2><i class="ph ph-key"></i> ตั้งรหัสผ่านใหม่</h2>
-        <p class="subtitle">กรอกรหัส OTP ที่ได้รับ และตั้งรหัสผ่านใหม่</p>
-        
-        <form id="resetPasswordForm">
-            <div class="input-group">
-                <input type="text" id="resetOtpCode" class="pin-input" placeholder="รหัส OTP 6 หลัก" inputmode="numeric" maxlength="6" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="newPassword" placeholder="รหัสผ่านใหม่" required>
-            </div>
-            <button type="submit" id="resetBtn">บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i></button>
-        </form>
-
-        <div class="loading-text" id="resetLoading">กำลังเปลี่ยนรหัสผ่าน...</div>
-        <span class="link-center" onclick="showPanel('loginPanel')">ยกเลิก</span>
-    </div>
-
-    <div class="glass-panel hidden" id="dashboardPanel">
-        <div class="dashboard-header">
-            <h3 id="dashName">ยินดีต้อนรับ, คุณ...</h3>
-            <p class="subtitle" style="margin: 0; color: #a8e6cf;" id="dashRole">สถานะ: สมาชิก</p>
-        </div>
-        
-        <div class="balance-card">
-            <p>ยอดเงินฝากสะสม</p>
-            <div class="balance-amount">฿ <span id="dashBalance">0.00</span></div>
-        </div>
-
-        <button style="background: rgba(76, 175, 80, 0.4);"><i class="ph ph-wallet"></i> แจ้งฝากเงิน</button>
-        <button style="background: rgba(244, 67, 54, 0.4);" onclick="logout()"><i class="ph ph-sign-out"></i> ออกจากระบบ</button>
-    </div>
-
-    <div class="glass-panel hidden" id="adminPanel">
-        <div class="dashboard-header">
-            <h3><i class="ph ph-shield-star"></i> จัดการระบบ (Admin)</h3>
-            <p class="subtitle" style="margin: 0; color: #ffb74d;">สิทธิ์: ผู้ดูแลระบบ</p>
-        </div>
-        
-        <div class="balance-card" style="text-align: left; padding: 15px;">
-            <p style="margin-bottom: 10px; font-weight: 500;">สมาชิกที่รอการอนุมัติ:</p>
-            <div id="pendingUsersList" style="font-size: 14px;">
-                <div style="color: rgba(255,255,255,0.6);">กำลังโหลดข้อมูล...</div>
+            <h3 class="section-title"><i class="ph ph-clock-counter-clockwise"></i> ประวัติการทำรายการ</h3>
+            <div class="history-list">
+                <div class="glass-card history-item">
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <div class="hist-icon in"><i class="ph ph-download-simple"></i></div>
+                        <div>
+                            <div style="font-weight: 500;">ฝากเงินออมรายเดือน</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">01 มิ.ย. 2026, 09:30 น.</div>
+                        </div>
+                    </div>
+                    <div style="font-weight: 500; color: #81c784;">+1,000.00</div>
+                </div>
+                <div class="glass-card history-item">
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <div class="hist-icon in"><i class="ph ph-gift"></i></div>
+                        <div>
+                            <div style="font-weight: 500;">รับเงินปันผลประจำปี</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6);">28 ก.พ. 2026, 14:00 น.</div>
+                        </div>
+                    </div>
+                    <div style="font-weight: 500; color: #81c784;">+2,450.00</div>
+                </div>
             </div>
         </div>
 
-        <button style="background: rgba(244, 67, 54, 0.4);" onclick="logout()"><i class="ph ph-sign-out"></i> ออกจากระบบ</button>
+        <div id="page-deposit" class="page-section">
+            <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงิน / จ่ายเงินออม</h3>
+            <div class="glass-card" style="padding: 20px;">
+                <p style="font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 15px;">โอนเงินเข้าบัญชีสหกรณ์แล้วแนบสลิปที่นี่</p>
+                <button class="list-btn" style="justify-content: center; background: rgba(76, 175, 80, 0.3);">
+                    <i class="ph ph-upload-simple"></i> อัปโหลดสลิป
+                </button>
+            </div>
+        </div>
+
+        <div id="page-dividend" class="page-section">
+            <h3 class="section-title"><i class="ph ph-chart-line-up"></i> ประวัติปันผลย้อนหลัง</h3>
+            <div class="history-list">
+                <div class="glass-card history-item">
+                    <div>
+                        <div style="font-weight: 500;">ปันผลปี 2568</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">อัตรา 5.5%</div>
+                    </div>
+                    <div style="font-weight: 500; color: #64ffda;">฿ 2,450.00</div>
+                </div>
+                <div class="glass-card history-item">
+                    <div>
+                        <div style="font-weight: 500;">ปันผลปี 2567</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.6);">อัตรา 5.0%</div>
+                    </div>
+                    <div style="font-weight: 500; color: #64ffda;">฿ 1,900.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-more" class="page-section">
+            <h3 class="section-title">เมนูเพิ่มเติม</h3>
+            
+            <button class="glass-card list-btn">
+                <div><i class="ph ph-sliders"></i> ปรับการลงทุน (หุ้น/กองทุน)</div>
+                <i class="ph ph-caret-right" style="font-size: 18px; color: rgba(255,255,255,0.5);"></i>
+            </button>
+            
+            <button class="glass-card list-btn">
+                <div><i class="ph ph-headset"></i> ติดต่อเจ้าหน้าที่ / ช่วยเหลือ</div>
+                <i class="ph ph-caret-right" style="font-size: 18px; color: rgba(255,255,255,0.5);"></i>
+            </button>
+
+            <button class="glass-card list-btn" style="margin-top: 20px; border-left: 4px solid #fdbb2d;">
+                <div><i class="ph ph-shield-star" style="color: #fdbb2d;"></i> เข้าระบบ Admin (จัดการสมาชิก)</div>
+                <i class="ph ph-caret-right" style="font-size: 18px; color: rgba(255,255,255,0.5);"></i>
+            </button>
+
+            <button class="glass-card list-btn" style="background: rgba(244, 67, 54, 0.1); color: #e57373; margin-top: 20px;">
+                <div><i class="ph ph-sign-out" style="color: #e57373;"></i> ออกจากระบบ</div>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('page-home', this)">
+            <i class="ph ph-house"></i>
+            <span>หน้าหลัก</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('page-deposit', this)">
+            <i class="ph ph-wallet"></i>
+            <span>ฝากเงิน</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('page-dividend', this)">
+            <i class="ph ph-chart-line-up"></i>
+            <span>ปันผล</span>
+        </div>
+        <div class="nav-item" onclick="switchPage('page-more', this)">
+            <i class="ph ph-squares-four"></i>
+            <span>เมนู</span>
+        </div>
     </div>
 
     <script>
-        // URL จาก Google Apps Script (Web App) ของคุณ
-        const API_URL = "https://script.google.com/macros/s/AKfycbwq_C39dHSoPqatT2Zemu3VobRnxViR53ebT1J4HdCvTaP9B3lsc4AqUgd-UttX_xYa/exec"; 
-        
-        // ตัวแปรพักข้อมูลชั่วคราว
-        let tempRegData = {};
-        let tempForgotEmail = "";
+        function switchPage(pageId, navElement) {
+            // ซ่อนทุกหน้า
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            // แสดงหน้าที่เลือก
+            document.getElementById(pageId).classList.add('active');
 
-        // ฟังก์ชันสลับหน้าจอ
-        function showPanel(panelId) {
-            const panels = ['loginPanel', 'registerPanel', 'otpRegisterPanel', 'forgotPanel', 'resetPasswordPanel', 'dashboardPanel', 'adminPanel'];
-            panels.forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-            document.getElementById(panelId).classList.remove('hidden');
-        }
-
-        // ฟังก์ชันจัดการ UI สถานะโหลด
-        function setLoading(btnId, loadingId, isLoading, text = "") {
-            const btn = document.getElementById(btnId);
-            const loading = document.getElementById(loadingId);
-            btn.disabled = isLoading;
-            loading.style.display = isLoading ? 'block' : 'none';
-            if(text && !isLoading) btn.innerHTML = text;
-        }
-
-        // --- 1. จัดการฟอร์ม เข้าสู่ระบบ ---
-        document.getElementById("loginForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const email = document.getElementById("loginEmail").value;
-            const password = document.getElementById("loginPassword").value;
-
-            setLoading("loginBtn", "loginLoading", true);
-
-            const payload = new URLSearchParams();
-            payload.append("action", "login");
-            payload.append("email", email);
-            payload.append("password", password);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
-                if (data.status === "success") {
-                    if (data.user.role === 'Admin') {
-                        // ไปหน้า Admin
-                        showPanel('adminPanel');
-                        loadPendingUsers();
-                    } else {
-                        // ไปหน้า User
-                        document.getElementById("dashName").innerText = "ยินดีต้อนรับ, คุณ " + data.user.name;
-                        document.getElementById("dashRole").innerText = "สถานะ: " + (data.user.role === 'Admin' ? 'ผู้ดูแลระบบ' : 'สมาชิก');
-                        document.getElementById("dashBalance").innerText = "-"; // ดึงยอดจริงทีหลัง
-                        showPanel('dashboardPanel');
-                    }
-                } else {
-                    alert(data.message);
-                }
-            }).catch(err => {
-                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
-                setLoading("loginBtn", "loginLoading", false, 'เข้าสู่ระบบ <i class="ph ph-sign-in"></i>');
-            });
-        });
-
-        // --- 2. จัดการฟอร์ม สมัครสมาชิก (ขอ OTP) ---
-        document.getElementById("registerForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            
-            tempRegData = {
-                name: document.getElementById("regName").value,
-                email: document.getElementById("regEmail").value,
-                password: document.getElementById("regPassword").value,
-                pin: document.getElementById("regPin").value
-            };
-
-            setLoading("regBtn", "regLoading", true);
-
-            const payload = new URLSearchParams();
-            payload.append("action", "register_request");
-            payload.append("email", tempRegData.email);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                setLoading("regBtn", "regLoading", false, 'ขอรหัส OTP <i class="ph ph-paper-plane-right"></i>');
-                if (data.status === "success") {
-                    document.getElementById("displayRegEmail").innerText = tempRegData.email;
-                    showPanel('otpRegisterPanel');
-                } else {
-                    alert(data.message);
-                }
-            }).catch(err => {
-                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
-                setLoading("regBtn", "regLoading", false, 'ขอรหัส OTP <i class="ph ph-paper-plane-right"></i>');
-            });
-        });
-
-        // --- 3. จัดการฟอร์ม ยืนยัน OTP (บันทึกสมัครสมาชิก) ---
-        document.getElementById("otpRegisterForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const otpCode = document.getElementById("regOtpCode").value;
-
-            setLoading("verifyRegBtn", "otpRegLoading", true);
-
-            const payload = new URLSearchParams();
-            payload.append("action", "register_verify");
-            payload.append("name", tempRegData.name);
-            payload.append("email", tempRegData.email);
-            payload.append("password", tempRegData.password);
-            payload.append("pin", tempRegData.pin);
-            payload.append("otp", otpCode);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                setLoading("verifyRegBtn", "otpRegLoading", false, 'ยืนยันการสมัคร <i class="ph ph-check-circle"></i>');
-                if (data.status === "success") {
-                    alert(data.message); // แจ้งเตือนว่ารออนุมัติ
-                    document.getElementById("registerForm").reset();
-                    document.getElementById("otpRegisterForm").reset();
-                    showPanel('loginPanel');
-                } else {
-                    alert(data.message);
-                }
-            }).catch(err => {
-                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
-                setLoading("verifyRegBtn", "otpRegLoading", false, 'ยืนยันการสมัคร <i class="ph ph-check-circle"></i>');
-            });
-        });
-
-        // --- 4. จัดการฟอร์ม ลืมรหัสผ่าน (ขอ OTP) ---
-        document.getElementById("forgotForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            tempForgotEmail = document.getElementById("forgotEmail").value;
-
-            setLoading("forgotBtn", "forgotLoading", true);
-
-            const payload = new URLSearchParams();
-            payload.append("action", "forgot_request");
-            payload.append("email", tempForgotEmail);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                setLoading("forgotBtn", "forgotLoading", false, 'ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i>');
-                if (data.status === "success") {
-                    showPanel('resetPasswordPanel');
-                } else {
-                    alert(data.message);
-                }
-            }).catch(err => {
-                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
-                setLoading("forgotBtn", "forgotLoading", false, 'ส่งรหัส OTP <i class="ph ph-paper-plane-right"></i>');
-            });
-        });
-
-        // --- 5. จัดการฟอร์ม ตั้งรหัสผ่านใหม่ (ยืนยัน OTP รีเซ็ต) ---
-        document.getElementById("resetPasswordForm").addEventListener("submit", (e) => {
-            e.preventDefault();
-            const otpCode = document.getElementById("resetOtpCode").value;
-            const newPassword = document.getElementById("newPassword").value;
-
-            setLoading("resetBtn", "resetLoading", true);
-
-            const payload = new URLSearchParams();
-            payload.append("action", "forgot_reset");
-            payload.append("email", tempForgotEmail);
-            payload.append("otp", otpCode);
-            payload.append("new_password", newPassword);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                setLoading("resetBtn", "resetLoading", false, 'บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i>');
-                if (data.status === "success") {
-                    alert("เปลี่ยนรหัสผ่านสำเร็จ! กรุณาเข้าสู่ระบบด้วยรหัสใหม่");
-                    document.getElementById("forgotForm").reset();
-                    document.getElementById("resetPasswordForm").reset();
-                    showPanel('loginPanel');
-                } else {
-                    alert(data.message);
-                }
-            }).catch(err => {
-                alert("เครือข่ายขัดข้อง กรุณาลองใหม่");
-                setLoading("resetBtn", "resetLoading", false, 'บันทึกรหัสผ่านใหม่ <i class="ph ph-floppy-disk"></i>');
-            });
-        });
-
-        // --- ฟังก์ชันออกจากระบบ ---
-        function logout() {
-            if(confirm("ต้องการออกจากระบบใช่หรือไม่?")) {
-                document.getElementById("loginForm").reset();
-                showPanel('loginPanel');
+            // เปลี่ยนสถานะ Active ของ Bottom Nav
+            if (navElement) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                navElement.classList.add('active');
+            } else {
+                // กรณีถูกเรียกจากปุ่มในหน้าหลัก ให้ปรับไฮไลท์เมนูด้านล่างให้ตรงด้วย
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                if(pageId === 'page-deposit') document.querySelectorAll('.nav-item')[1].classList.add('active');
+                if(pageId === 'page-dividend') document.querySelectorAll('.nav-item')[2].classList.add('active');
             }
-        }
-
-        // --- ฟังก์ชันโหลดรายชื่อคนรออนุมัติ (Admin) ---
-        function loadPendingUsers() {
-            const listDiv = document.getElementById("pendingUsersList");
-            listDiv.innerHTML = '<div style="color: rgba(255,255,255,0.6);">กำลังโหลดข้อมูล...</div>';
-
-            const payload = new URLSearchParams();
-            payload.append("action", "get_pending_users");
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                if(data.status === "success" && data.users.length > 0) {
-                    let html = "";
-                    data.users.forEach(u => {
-                        html += `
-                        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 500;">${u.name}</div>
-                                <div style="font-size: 12px; color: rgba(255,255,255,0.7);">${u.email}</div>
-                            </div>
-                            <button onclick="approveUser('${u.email}')" style="width: auto; padding: 5px 10px; margin: 0; font-size: 12px; background: rgba(76, 175, 80, 0.6);">อนุมัติ</button>
-                        </div>`;
-                    });
-                    listDiv.innerHTML = html;
-                } else {
-                    listDiv.innerHTML = '<div style="color: rgba(255,255,255,0.6);">ไม่มีสมาชิกที่รออนุมัติในขณะนี้</div>';
-                }
-            });
-        }
-
-        // --- ฟังก์ชันกดอนุมัติ (Admin) ---
-        function approveUser(email) {
-            if(!confirm("ยืนยันการอนุมัติผู้ใช้: " + email)) return;
-            
-            const payload = new URLSearchParams();
-            payload.append("action", "approve_user");
-            payload.append("target_email", email);
-
-            fetch(API_URL, { method: "POST", body: payload })
-            .then(res => res.json())
-            .then(data => {
-                if(data.status === "success") {
-                    alert("อนุมัติสำเร็จ!");
-                    loadPendingUsers(); // โหลดข้อมูลใหม่
-                } else {
-                    alert("ข้อผิดพลาด: " + data.message);
-                }
-            });
         }
     </script>
 </body>
