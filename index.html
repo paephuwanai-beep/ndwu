@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>my NDAD pro - สหกรณ์ออมทรัพย์</title>
     
-    <!-- โหลด Font และ Icon แบบไม่ให้บล็อกหน้าเว็บ -->
+    <!-- โหลด Font และ Icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
         /* ================= RESET & BASE ================= */
@@ -32,17 +32,17 @@
 
         /* ================= GLASSMORPHISM CLASSES ================= */
         .glass-panel { 
-            width: 100%; max-width: 400px; margin: auto;
-            background: rgba(255, 255, 255, 0.05); 
+            width: 100%; max-width: 420px; margin: auto;
+            background: rgba(255, 255, 255, 0.08); 
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 24px; padding: 35px 25px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 24px; padding: 40px 30px; 
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); text-align: center; 
         }
         .glass-card { 
-            background: rgba(255, 255, 255, 0.05); 
+            background: rgba(255, 255, 255, 0.08); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
             border-radius: 20px; 
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); 
         }
@@ -52,7 +52,7 @@
         .input-group label { display: block; font-size: 13px; margin-bottom: 8px; color: rgba(255,255,255,0.8); font-weight: 400; }
         input { 
             width: 100%; padding: 14px 16px; border-radius: 12px; 
-            background: rgba(0, 0, 0, 0.2); color: #fff; font-size: 15px; 
+            background: rgba(0, 0, 0, 0.25); color: #fff; font-size: 15px; 
             border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; 
         }
         input:focus { background: rgba(0, 0, 0, 0.4); border-color: #00E5FF; outline: none; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
@@ -70,8 +70,8 @@
 
         /* ================= LAYOUT & NAVIGATION ================= */
         .auth-wrapper { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .app-wrapper { padding-bottom: 90px; }
-        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .app-wrapper { padding-bottom: 100px; }
+        .container { padding: 20px; max-width: 550px; margin: 0 auto; }
         
         .top-bar { 
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
@@ -86,61 +86,61 @@
             display: flex; justify-content: space-around; align-items: center; z-index: 1000; 
         }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.4); font-size: 11px; cursor: pointer; width: 25%; font-weight: 500; transition: 0.3s; }
-        .nav-item i { font-size: 24px; transition: 0.3s; }
+        .nav-item i { font-size: 26px; transition: 0.3s; margin-bottom: 2px; }
         .nav-item.active { color: #00E5FF; }
         .nav-item.active i { transform: translateY(-3px); }
 
-        .bell-container { position: relative; cursor: pointer; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: rgba(255,255,255,0.05); }
-        .bell-badge { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: #FF3B30; border-radius: 50%; display: none; box-shadow: 0 0 8px #FF3B30; }
+        .bell-container { position: relative; cursor: pointer; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: rgba(255,255,255,0.05); transition: 0.3s; }
+        .bell-container:hover { background: rgba(255,255,255,0.1); }
+        .bell-badge { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; background: #FF3B30; border-radius: 50%; display: none; box-shadow: 0 0 8px #FF3B30; }
 
         /* ================= APP COMPONENTS ================= */
-        .page-section { display: none; animation: fadeIn 0.4s ease; }
-        .page-section.active { display: block; }
+        .page-section, .admin-content-section { display: none; animation: fadeIn 0.4s ease; }
+        .page-section.active, .admin-content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .account-card { 
             padding: 30px 25px; margin-bottom: 25px; position: relative; overflow: hidden; 
-            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(0, 0, 0, 0)); 
-            border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 20px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(0, 0, 0, 0)); 
+            border: 1px solid rgba(0, 229, 255, 0.3); border-radius: 20px;
         }
-        .account-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(0,229,255,0.15) 0%, transparent 70%); border-radius: 50%; pointer-events: none;}
-        .acc-name { font-size: 18px; font-weight: 500; }
-        .acc-no { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 20px; font-family: monospace; }
-        .acc-balance { font-size: 34px; font-weight: 600; color: #fff; margin-top: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .account-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(0,229,255,0.2) 0%, transparent 70%); border-radius: 50%; pointer-events: none;}
+        .acc-name { font-size: 20px; font-weight: 500; }
+        .acc-no { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 20px; font-family: monospace; }
+        .acc-balance { font-size: 38px; font-weight: 600; color: #fff; margin-top: 5px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 25px; }
-        .menu-btn { padding: 18px 10px; border: none; border-radius: 16px; background: rgba(255,255,255,0.05); color: #fff; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
-        .menu-btn i { font-size: 28px; color: #00E5FF; }
-        .menu-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(0,229,255,0.3); transform: translateY(-2px); }
+        .menu-btn { padding: 18px 10px; border: none; border-radius: 16px; background: rgba(255,255,255,0.08); color: #fff; font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .menu-btn i { font-size: 30px; color: #00E5FF; }
+        .menu-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(0,229,255,0.4); transform: translateY(-3px); }
 
-        .list-btn { width: 100%; padding: 18px 20px; margin-bottom: 12px; border: none; border-radius: 16px; background: rgba(255,255,255,0.05); color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
-        .list-btn:hover { background: rgba(255,255,255,0.1); }
+        .list-btn { width: 100%; padding: 20px; margin-bottom: 12px; border: none; border-radius: 16px; background: rgba(255,255,255,0.08); color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .list-btn:hover { background: rgba(255,255,255,0.15); }
 
-        .section-title { font-size: 15px; font-weight: 500; margin: 25px 0 15px 0; display: flex; align-items: center; gap: 8px; color: #E2E8F0; }
-        .history-list { display: flex; flex-direction: column; gap: 10px; }
-        .history-item { padding: 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); }
-        .hist-icon { width: 42px; height: 42px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
+        .section-title { font-size: 16px; font-weight: 500; margin: 30px 0 15px 0; display: flex; align-items: center; gap: 8px; color: #E2E8F0; }
+        .history-list { display: flex; flex-direction: column; gap: 12px; }
+        .history-item { padding: 18px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .hist-icon { width: 46px; height: 46px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
 
         /* ================= MODAL & POPUP ================= */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
         .modal-overlay.show { opacity: 1; visibility: visible; }
-        .modal-box { background: #0B192C; border: 1px solid rgba(0,229,255,0.3); border-radius: 20px; padding: 30px 25px; width: 100%; max-width: 320px; text-align: center; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .modal-box { background: #0B192C; border: 1px solid rgba(0,229,255,0.3); border-radius: 24px; padding: 35px 25px; width: 100%; max-width: 340px; text-align: center; transform: scale(0.9); transition: 0.3s; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .modal-overlay.show .modal-box { transform: scale(1); }
-        .modal-title { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-        .modal-desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 25px; line-height: 1.5; }
+        .modal-title { font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .modal-desc { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 25px; line-height: 1.6; }
         
-        .rcpt-container { background: #fff; width: 100%; max-width: 360px; border-radius: 16px; padding: 25px; color: #333; position: relative; display: none; }
+        .rcpt-container { background: #fff; width: 100%; max-width: 380px; border-radius: 20px; padding: 30px; color: #333; position: relative; display: none; }
         .rcpt-container.show { display: block; }
-        .rcpt-row { font-size: 13px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .rcpt-row { font-size: 14px; margin-bottom: 12px; display: flex; justify-content: space-between; }
         .rcpt-lbl { color: #666; } .rcpt-val { font-weight: 600; color: #111; text-align: right; }
 
         /* ================= ADMIN TABS ================= */
-        .admin-tab-btns { display: flex; overflow-x: auto; gap: 8px; margin-bottom: 20px; padding-bottom: 10px; scrollbar-width: none; }
-        .admin-tab-btns::-webkit-scrollbar { display: none; }
-        .admin-tab { flex: 0 0 auto; padding: 10px 16px; text-align: center; background: rgba(255,255,255,0.05); border-radius: 12px; cursor: pointer; font-size: 13px; white-space: nowrap; color: rgba(255,255,255,0.7); border: 1px solid transparent; transition: 0.3s; }
-        .admin-tab.active { background: rgba(0,229,255,0.1); color: #00E5FF; border-color: rgba(0,229,255,0.5); font-weight: 500; }
-        .admin-item-row { background: rgba(0,0,0,0.25); padding: 16px; border-radius: 16px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .admin-btn { border: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; color: #fff; cursor: pointer; font-weight: 500; transition: 0.2s; }
+        .admin-tab-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .admin-tab { padding: 12px 16px; text-align: center; background: rgba(255,255,255,0.08); border-radius: 12px; cursor: pointer; font-size: 13px; color: rgba(255,255,255,0.7); border: 1px solid transparent; transition: 0.3s; flex-grow: 1; }
+        .admin-tab.active { background: rgba(0,229,255,0.15); color: #00E5FF; border-color: rgba(0,229,255,0.5); font-weight: 500; }
+        .admin-item-row { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.08); }
+        .admin-btn { border: none; padding: 10px 16px; border-radius: 10px; font-size: 13px; color: #fff; cursor: pointer; font-weight: 500; transition: 0.2s; }
         .btn-green { background: #10B981; } .btn-red { background: #EF4444; }
     </style>
 </head>
@@ -149,13 +149,13 @@
     <!-- ================= CUSTOM POPUP ================= -->
     <div id="customModal" class="modal-overlay">
         <div class="modal-box">
-            <div id="modalIcon" style="font-size: 45px; margin-bottom: 10px; color: #00E5FF;"></div>
+            <div id="modalIcon" style="font-size: 50px; margin-bottom: 15px; color: #00E5FF;"></div>
             <div id="modalTitle" class="modal-title"></div>
             <div id="modalDesc" class="modal-desc"></div>
             <div id="modalInputArea" class="hidden" style="margin-bottom: 20px;">
-                <input type="number" id="modalInput" placeholder="กรอกตัวเลขที่นี่..." style="text-align: center; font-size: 18px;">
+                <input type="number" step="0.01" id="modalInput" placeholder="กรอกตัวเลขที่นี่..." style="text-align: center; font-size: 18px;">
             </div>
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 12px;">
                 <button id="modalBtnCancel" class="btn-primary hidden" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); box-shadow: none;" onclick="closeModal()">ยกเลิก</button>
                 <button id="modalBtnConfirm" class="btn-primary" onclick="closeModal(true)">ตกลง</button>
             </div>
@@ -167,7 +167,7 @@
         
         <!-- LOGIN -->
         <div class="glass-panel" id="loginPanel">
-            <div style="margin-bottom: 30px;">
+            <div style="margin-bottom: 35px;">
                 <div class="app-logo">
                     <div><span class="main-text">my NDAD</span><span class="pro-text">pro</span></div>
                     <div class="sub-text">สอ.รร.นางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
@@ -178,7 +178,7 @@
                 <div class="input-group"><input type="password" id="loginPassword" placeholder="รหัสผ่าน" required></div>
                 <button type="submit" class="btn-primary" id="loginBtn">เข้าสู่ระบบ</button>
             </form>
-            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 13px;">
+            <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 14px;">
                 <span style="color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('forgotPanel')">ลืมรหัสผ่าน?</span>
                 <span style="color: #00E5FF; cursor: pointer; font-weight: 500;" onclick="switchAuthPanel('registerPanel')">สมัครสมาชิกใหม่</span>
             </div>
@@ -186,7 +186,7 @@
         
         <!-- REGISTER -->
         <div class="glass-panel hidden" id="registerPanel">
-            <h2 style="font-size: 20px; margin-bottom: 20px;">สมัครสมาชิกใหม่</h2>
+            <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-user-plus" style="margin-right: 8px;"></i> สมัครสมาชิกใหม่</h2>
             <form id="registerForm">
                 <div class="input-group"><input type="text" id="regName" placeholder="ชื่อ-นามสกุลจริง" required></div>
                 <div class="input-group"><input type="email" id="regEmail" placeholder="อีเมลสำหรับติดต่อ" required></div>
@@ -194,39 +194,39 @@
                 <div class="input-group"><input type="password" id="regPin" class="pin-input" placeholder="PIN 6 หลัก" inputmode="numeric" maxlength="6" required></div>
                 <button type="submit" class="btn-primary" id="regBtn">ขอรหัส OTP</button>
             </form>
-            <div style="margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับไปหน้าเข้าสู่ระบบ</div>
+            <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับไปหน้าเข้าสู่ระบบ</div>
         </div>
 
         <!-- OTP -->
         <div class="glass-panel hidden" id="otpRegisterPanel">
-            <h2 style="font-size: 20px; margin-bottom: 20px;">ยืนยันรหัส OTP</h2>
-            <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">กรุณากรอกรหัส 6 หลักที่ส่งไปยังอีเมลของคุณ</p>
+            <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-envelope-open" style="margin-right: 8px;"></i> ยืนยันรหัส OTP</h2>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 25px;">กรุณากรอกรหัส 6 หลักที่ส่งไปยังอีเมลของคุณ</p>
             <form id="otpRegisterForm">
                 <div class="input-group"><input type="text" id="regOtpCode" class="pin-input" placeholder="000000" maxlength="6" required></div>
                 <button type="submit" class="btn-primary" id="verifyRegBtn">ยืนยันการสมัคร</button>
             </form>
-            <div style="margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('registerPanel')">ย้อนกลับ</div>
+            <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('registerPanel')">ย้อนกลับ</div>
         </div>
 
         <!-- FORGOT PASSWORD -->
         <div class="glass-panel hidden" id="forgotPanel">
-            <h2 style="font-size: 20px; margin-bottom: 20px;">ลืมรหัสผ่าน</h2>
+            <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-lock-key" style="margin-right: 8px;"></i> ลืมรหัสผ่าน</h2>
             <form id="forgotForm">
                 <div class="input-group"><input type="email" id="forgotEmail" placeholder="ระบุอีเมลที่ใช้สมัคร" required></div>
                 <button type="submit" class="btn-primary" id="forgotBtn">ส่งรหัส OTP เพื่อรีเซ็ต</button>
             </form>
-            <div style="margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับ</div>
+            <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ย้อนกลับ</div>
         </div>
 
         <!-- RESET PASSWORD -->
         <div class="glass-panel hidden" id="resetPasswordPanel">
-            <h2 style="font-size: 20px; margin-bottom: 20px;">ตั้งรหัสผ่านใหม่</h2>
+            <h2 style="font-size: 22px; margin-bottom: 25px;"><i class="ph ph-key" style="margin-right: 8px;"></i> ตั้งรหัสผ่านใหม่</h2>
             <form id="resetPasswordForm">
                 <div class="input-group"><input type="text" id="resetOtpCode" class="pin-input" placeholder="OTP 6 หลัก" required></div>
                 <div class="input-group"><input type="password" id="newPassword" placeholder="รหัสผ่านใหม่" required></div>
                 <button type="submit" class="btn-primary" id="resetBtn">บันทึกรหัสผ่านใหม่</button>
             </form>
-            <div style="margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ยกเลิก</div>
+            <div style="margin-top: 25px; font-size: 14px; color: rgba(255,255,255,0.6); cursor: pointer;" onclick="switchAuthPanel('loginPanel')">ยกเลิก</div>
         </div>
     </div>
 
@@ -237,8 +237,7 @@
                 <div><span class="main-text">my NDAD</span><span class="pro-text" style="font-size: 16px;">pro</span></div>
             </div>
             <div class="bell-container" onclick="switchAppPage('page-notifications')">
-                <!-- ใช้ Icon Fallback เบื้องต้นเผื่อโหลดไม่ขึ้น -->
-                <div style="font-size: 22px; color: #fff;">🔔</div>
+                <i class="ph ph-bell" style="font-size: 24px; color: #fff;"></i>
                 <div class="bell-badge" id="bellBadge"></div>
             </div>
         </div>
@@ -253,144 +252,176 @@
                     <div class="acc-balance">฿ <span id="accBalance">0.00</span></div>
                 </div>
                 <div class="menu-grid">
-                    <button class="menu-btn" onclick="switchAppPage('page-deposit')"><div style="font-size: 24px;">📥</div> ฝากออม</button>
-                    <button class="menu-btn" onclick="switchAppPage('page-loan')"><div style="font-size: 24px;">💳</div> สินเชื่อ</button>
-                    <button class="menu-btn" onclick="switchAppPage('page-receipts')"><div style="font-size: 24px;">🧾</div> ใบเสร็จ</button>
+                    <button class="menu-btn" onclick="switchAppPage('page-deposit')"><i class="ph ph-wallet"></i> ฝากออม</button>
+                    <button class="menu-btn" onclick="switchAppPage('page-loan')"><i class="ph ph-hand-coins"></i> สินเชื่อ</button>
+                    <button class="menu-btn" onclick="switchAppPage('page-receipts')"><i class="ph ph-receipt"></i> ใบเสร็จ</button>
                 </div>
-                <h3 class="section-title">รายการล่าสุด</h3>
+                <h3 class="section-title"><i class="ph ph-clock-counter-clockwise"></i> รายการล่าสุด</h3>
                 <div id="recentHistoryList" class="history-list"></div>
             </div>
 
             <!-- 2. Deposit -->
             <div id="page-deposit" class="page-section">
-                <h3 class="section-title">แจ้งฝากเงินออมทรัพย์</h3>
-                <div class="glass-card" style="padding: 25px 20px;">
+                <h3 class="section-title"><i class="ph ph-wallet"></i> แจ้งฝากเงินออมทรัพย์</h3>
+                <div class="glass-card" style="padding: 30px 20px;">
                     <form id="depositForm">
                         <div class="input-group">
                             <label>จำนวนเงินที่ฝาก (บาท)</label>
-                            <input type="number" id="depAmount" placeholder="เช่น 1000" min="1" required style="font-size: 22px; font-weight: 500;">
+                            <input type="number" id="depAmount" placeholder="เช่น 1000" min="1" required style="font-size: 24px; font-weight: 500;">
                         </div>
-                        <div class="input-group" style="margin-top: 20px;">
+                        <div class="input-group" style="margin-top: 25px;">
                             <label>แนบสลิปหลักฐานการโอนเงิน (ไม่เกิน 5MB)</label>
-                            <input type="file" id="depSlip" accept="image/*" required>
+                            <input type="file" id="depSlip" accept="image/*" required style="padding: 10px; background: rgba(0,0,0,0.2);">
                         </div>
-                        <button type="submit" class="btn-primary" id="depBtn" style="margin-top: 25px;">ยืนยันแจ้งฝากเงิน</button>
+                        <button type="submit" class="btn-primary" id="depBtn" style="margin-top: 30px;">ยืนยันแจ้งฝากเงิน</button>
                     </form>
                 </div>
             </div>
 
             <!-- 3. Loan -->
             <div id="page-loan" class="page-section">
-                <h3 class="section-title">บัญชีสินเชื่อ</h3>
+                <h3 class="section-title"><i class="ph ph-hand-coins"></i> บัญชีสินเชื่อ</h3>
                 <div id="loanActiveList"></div>
                 
-                <div class="glass-card" style="padding: 25px 20px; margin-top: 20px; border: 1px dashed rgba(0,229,255,0.5);">
-                    <h4 style="margin-bottom: 15px; color: #00E5FF; font-weight: 500;">ยื่นขอสินเชื่อใหม่</h4>
+                <div class="glass-card" style="padding: 25px 20px; margin-top: 25px; border: 1px dashed rgba(0,229,255,0.5);">
+                    <h4 style="margin-bottom: 20px; color: #00E5FF; font-weight: 500;"><i class="ph ph-plus-circle"></i> ยื่นขอสินเชื่อใหม่</h4>
                     <form id="reqLoanForm">
                         <div class="input-group">
                             <label>ระบุจำนวนเงินที่ต้องการกู้ (บาท)</label>
-                            <input type="number" id="reqLoanAmt" required>
+                            <input type="number" id="reqLoanAmt" required style="font-size: 20px;">
                         </div>
-                        <button type="submit" class="btn-primary" id="reqLoanBtn" style="background: rgba(0,229,255,0.15); color: #00E5FF; border: 1px solid rgba(0,229,255,0.3); box-shadow: none;">ยื่นคำขอกู้</button>
+                        <button type="submit" class="btn-primary" id="reqLoanBtn" style="background: rgba(0,229,255,0.15); color: #00E5FF; border: 1px solid rgba(0,229,255,0.3); box-shadow: none;">ส่งคำขอกู้</button>
                     </form>
                 </div>
             </div>
 
             <!-- 4. Pay Loan -->
             <div id="page-pay-loan" class="page-section">
-                <h3 class="section-title">ชำระค่างวดสินเชื่อ</h3>
-                <div class="glass-card" style="padding: 25px 20px;">
+                <h3 class="section-title"><i class="ph ph-money"></i> ชำระค่างวดสินเชื่อ</h3>
+                <div class="glass-card" style="padding: 30px 20px;">
                     <form id="payLoanForm">
                         <input type="hidden" id="payLoanId">
-                        <div style="font-size:13px; color:#00E5FF; margin-bottom:20px; background:rgba(0,229,255,0.1); padding:10px; border-radius:10px;">ชำระของสัญญา: <strong id="payLoanIdTxt"></strong></div>
+                        <div style="font-size:14px; color:#00E5FF; margin-bottom:25px; background:rgba(0,229,255,0.1); padding:12px; border-radius:12px;">ชำระของสัญญา: <strong id="payLoanIdTxt"></strong></div>
                         <div class="input-group">
                             <label>ยอดเงินที่โอนชำระ (บาท)</label>
-                            <input type="number" id="payLoanAmt" required style="font-size: 20px; font-weight: 500;">
+                            <input type="number" id="payLoanAmt" required style="font-size: 24px; font-weight: 500;">
                         </div>
-                        <div class="input-group" style="margin-top: 20px;">
+                        <div class="input-group" style="margin-top: 25px;">
                             <label>แนบสลิปหลักฐานการโอนเงิน</label>
-                            <input type="file" id="payLoanSlip" accept="image/*" required>
+                            <input type="file" id="payLoanSlip" accept="image/*" required style="padding: 10px; background: rgba(0,0,0,0.2);">
                         </div>
-                        <button type="submit" class="btn-primary" id="payLoanBtn" style="margin-top: 25px;">ยืนยันแจ้งชำระเงิน</button>
+                        <button type="submit" class="btn-primary" id="payLoanBtn" style="margin-top: 30px;">ยืนยันแจ้งชำระเงิน</button>
                     </form>
-                    <button class="list-btn" style="margin-top:15px; justify-content: center;" onclick="switchAppPage('page-loan')">ย้อนกลับ</button>
+                    <button class="list-btn" style="margin-top:15px; justify-content: center; background: transparent; border: 1px solid rgba(255,255,255,0.2);" onclick="switchAppPage('page-loan')">ย้อนกลับ</button>
                 </div>
             </div>
 
             <!-- 5. Dividend -->
             <div id="page-dividend" class="page-section">
-                <h3 class="section-title">ประวัติรับเงินปันผล</h3>
+                <h3 class="section-title"><i class="ph ph-chart-line-up"></i> ประวัติรับเงินปันผล</h3>
                 <div id="dividendList" class="history-list"></div>
             </div>
 
             <!-- 6. Notifications -->
             <div id="page-notifications" class="page-section">
-                <h3 class="section-title">กล่องข้อความแจ้งเตือน</h3>
+                <h3 class="section-title"><i class="ph ph-bell"></i> กล่องข้อความแจ้งเตือน</h3>
                 <div id="notifyList" class="history-list"></div>
             </div>
 
             <!-- 7. Receipts -->
             <div id="page-receipts" class="page-section">
-                <h3 class="section-title">คลังใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
+                <h3 class="section-title"><i class="ph ph-receipt"></i> คลังใบเสร็จรับเงินอิเล็กทรอนิกส์</h3>
                 <div id="archiveReceiptList" class="history-list"></div>
             </div>
             
             <!-- 8. Menu -->
             <div id="page-more" class="page-section">
-                <h3 class="section-title">ตั้งค่าและบริการ</h3>
+                <h3 class="section-title"><i class="ph ph-gear"></i> ตั้งค่าและบริการ</h3>
                 
-                <button class="list-btn hidden" id="switchToAdminBtn" style="border-left: 4px solid #F59E0B; margin-bottom: 20px;" onclick="switchToAdminMode()">
-                    <div style="color: #F59E0B;">⚙️ โหมดผู้ดูแลระบบ (Admin)</div>
+                <button class="list-btn hidden" id="switchToAdminBtn" style="border-left: 4px solid #F59E0B; margin-bottom: 25px;" onclick="switchToAdminMode()">
+                    <div style="color: #F59E0B;"><i class="ph ph-shield-star" style="font-size: 22px; margin-right: 8px;"></i> โหมดผู้ดูแลระบบ (Admin)</div>
                 </button>
 
                 <button class="list-btn" onclick="showModal('ติดต่อเรา', 'เบอร์โทรศัพท์: 080-123-4567<br>LINE Official: @myndad.pro<br>ติดต่อได้ในวันและเวลาราชการ')">
-                    <div>📞 ติดต่อคณะกรรมการ</div>
+                    <div><i class="ph ph-headset" style="font-size: 22px; margin-right: 8px;"></i> ติดต่อคณะกรรมการ</div>
                 </button>
-                <button class="list-btn" style="color: #EF4444; border-left: 4px solid #EF4444;" onclick="showModal('ออกจากระบบ', 'ต้องการออกจากระบบใช่หรือไม่?', true, ()=>{ document.getElementById('loginForm').reset(); showAppMode('auth'); })">
-                    <div>🚪 ออกจากระบบ</div>
+                <button class="list-btn" style="color: #EF4444; border-left: 4px solid #EF4444; margin-top: 10px;" onclick="showModal('ออกจากระบบ', 'ต้องการออกจากระบบใช่หรือไม่?', true, ()=>{ document.getElementById('loginForm').reset(); showAppMode('auth'); })">
+                    <div><i class="ph ph-sign-out" style="font-size: 22px; margin-right: 8px;"></i> ออกจากระบบ</div>
                 </button>
             </div>
         </div>
 
         <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="switchAppPage('page-home', this)"><div style="font-size: 20px;">🏠</div>หน้าหลัก</div>
-            <div class="nav-item" onclick="switchAppPage('page-loan', this)"><div style="font-size: 20px;">💳</div>สินเชื่อ</div>
-            <div class="nav-item" onclick="switchAppPage('page-receipts', this)"><div style="font-size: 20px;">🧾</div>ใบเสร็จ</div>
-            <div class="nav-item" onclick="switchAppPage('page-more', this)"><div style="font-size: 20px;">☰</div>เมนู</div>
+            <div class="nav-item active" id="nav_home" onclick="switchAppPage('page-home', 'nav_home')"><i class="ph ph-house"></i>หน้าหลัก</div>
+            <div class="nav-item" id="nav_loan" onclick="switchAppPage('page-loan', 'nav_loan')"><i class="ph ph-hand-coins"></i>สินเชื่อ</div>
+            <div class="nav-item" id="nav_receipts" onclick="switchAppPage('page-receipts', 'nav_receipts')"><i class="ph ph-receipt"></i>ใบเสร็จ</div>
+            <div class="nav-item" id="nav_more" onclick="switchAppPage('page-more', 'nav_more')"><i class="ph ph-list"></i>เมนู</div>
         </div>
     </div>
 
     <!-- ================= ADMIN APP ================= -->
     <div class="app-wrapper hidden" id="adminWrapper">
         <div class="top-bar">
-            <div class="app-logo" style="font-size: 16px;">
-                <div><span class="main-text">Admin</span><span class="pro-text" style="font-size: 12px; color: #F59E0B;">Panel</span></div>
+            <div class="app-logo" style="font-size: 18px;">
+                <div><span class="main-text">Admin</span><span class="pro-text" style="font-size: 14px; color: #F59E0B;">Panel</span></div>
             </div>
-            <div style="font-size: 11px; color: #00E5FF; cursor: pointer; border: 1px solid rgba(0,229,255,0.3); padding: 8px 12px; border-radius: 10px; display: flex; align-items: center; gap: 5px;" onclick="switchToUserMode()">
-                โหมดสมาชิก
+            <div style="font-size: 12px; color: #00E5FF; cursor: pointer; border: 1px solid rgba(0,229,255,0.3); padding: 8px 14px; border-radius: 12px; display: flex; align-items: center; gap: 6px; background: rgba(0,229,255,0.1);" onclick="switchToUserMode()">
+                <i class="ph ph-user-switch" style="font-size: 18px;"></i> โหมดสมาชิก
             </div>
         </div>
         <div class="container">
+            
+            <!-- ADMIN TABS -->
             <div class="admin-tab-btns">
-                <div class="admin-tab active" onclick="switchAdminTab('users', this)">สมัครใหม่</div>
-                <div class="admin-tab" onclick="switchAdminTab('deposits', this)">สลิปฝาก</div>
-                <div class="admin-tab" onclick="switchAdminTab('loans', this)">ขอกู้</div>
-                <div class="admin-tab" onclick="switchAdminTab('pays', this)">สลิปกู้</div>
-                <div class="admin-tab" onclick="switchAdminTab('div', this)">จ่ายปันผล</div>
+                <div class="admin-tab active" id="tabBtn_users" onclick="switchAdminTab('users')">สมัครใหม่</div>
+                <div class="admin-tab" id="tabBtn_deposits" onclick="switchAdminTab('deposits')">สลิปฝาก</div>
+                <div class="admin-tab" id="tabBtn_loans" onclick="switchAdminTab('loans')">ขอกู้</div>
+                <div class="admin-tab" id="tabBtn_pays" onclick="switchAdminTab('pays')">สลิปกู้</div>
+                <div class="admin-tab" id="tabBtn_div" onclick="switchAdminTab('div')">จ่ายปันผล</div>
             </div>
 
-            <div id="adminContentUsers"><div id="adUsers"></div></div>
-            <div id="adminContentDeposits" class="hidden"><div id="adDeposits"></div></div>
-            <div id="adminContentLoans" class="hidden"><div id="adLoans"></div></div>
-            <div id="adminContentPays" class="hidden"><div id="adPays"></div></div>
+            <!-- ADMIN CONTENTS -->
+            <div id="adminContent_users" class="admin-content-section active">
+                <div class="glass-card" style="padding: 25px 20px;">
+                    <h3 class="section-title" style="margin-top:0;"><i class="ph ph-users"></i> คำขอสมัครสมาชิกใหม่</h3>
+                    <div id="adUsers" class="history-list"></div>
+                </div>
+            </div>
+
+            <div id="adminContent_deposits" class="admin-content-section hidden">
+                <div class="glass-card" style="padding: 25px 20px;">
+                    <h3 class="section-title" style="margin-top:0;"><i class="ph ph-wallet"></i> รายการแจ้งฝากเงินออม</h3>
+                    <div id="adDeposits" class="history-list"></div>
+                </div>
+            </div>
+
+            <div id="adminContent_loans" class="admin-content-section hidden">
+                <div class="glass-card" style="padding: 25px 20px;">
+                    <h3 class="section-title" style="margin-top:0;"><i class="ph ph-hand-coins"></i> คำขอสินเชื่อใหม่</h3>
+                    <div id="adLoans" class="history-list"></div>
+                </div>
+            </div>
+
+            <div id="adminContent_pays" class="admin-content-section hidden">
+                <div class="glass-card" style="padding: 25px 20px;">
+                    <h3 class="section-title" style="margin-top:0;"><i class="ph ph-money"></i> รายการชำระค่างวดสินเชื่อ</h3>
+                    <div id="adPays" class="history-list"></div>
+                </div>
+            </div>
             
-            <div id="adminContentDiv" class="hidden">
-                <div class="glass-card" style="padding: 25px 20px; border: 1px solid rgba(16, 185, 129, 0.3);">
-                    <h4 style="color: #10B981; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; font-weight: 500;">ระบบแจกจ่ายปันผล</h4>
-                    <div class="input-group"><label>อัตราปันผล (%)</label><input type="number" step="0.01" id="divPercent" placeholder="เช่น 5" required style="font-size: 18px; font-weight: bold;"></div>
-                    <div class="input-group"><label>หักเข้ากองทุนองค์กร (%)</label><input type="number" step="0.01" id="divDeduct" placeholder="เช่น 1 (ถ้าไม่มีให้ใส่ 0)" value="0" required></div>
-                    <button class="btn-primary" onclick="adminDividend()" style="background: #10B981; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); margin-top: 20px;">คำนวณและจ่ายเข้าบัญชีทันที</button>
+            <div id="adminContent_div" class="admin-content-section hidden">
+                <div class="glass-card" style="padding: 30px 20px; border: 1px solid rgba(16, 185, 129, 0.4);">
+                    <h3 class="section-title" style="color: #10B981; margin-top:0; font-size: 18px;"><i class="ph ph-gift" style="font-size: 26px;"></i> ระบบแจกจ่ายปันผล</h3>
+                    <div class="input-group">
+                        <label>อัตราปันผล (%)</label>
+                        <input type="number" step="0.01" id="divPercent" placeholder="เช่น 5" required style="font-size: 20px; font-weight: bold;">
+                    </div>
+                    <div class="input-group" style="margin-top: 20px;">
+                        <label>หักเข้ากองทุนองค์กร (%)</label>
+                        <input type="number" step="0.01" id="divDeduct" placeholder="เช่น 1 (ถ้าไม่มีให้ใส่ 0)" value="0" required>
+                    </div>
+                    <button class="btn-primary" onclick="adminDividend()" style="background: #10B981; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3); margin-top: 30px;">คำนวณและจ่ายเข้าบัญชีทันที</button>
                 </div>
             </div>
         </div>
@@ -399,230 +430,380 @@
     <!-- ================= RECEIPTS MODAL ================= -->
     <div id="receiptModal" class="modal-overlay" style="z-index: 4000; flex-direction: column;">
         <div id="receiptBox" class="rcpt-container">
-            <div style="text-align:center; margin-bottom:20px;">
-                <div style="font-size:24px; font-weight:700; color:#0B192C;">my NDAD <span style="color:#10B981;">pro</span></div>
-                <div style="font-size:11px; color:#666; margin-top: 4px;">สอ.รร.นางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
-                <div id="rTitle" style="font-size:14px; font-weight:600; color:#333; margin-top: 8px;">ใบเสร็จรับเงิน</div>
+            <div style="text-align:center; margin-bottom:25px;">
+                <div style="font-size:26px; font-weight:700; color:#0B192C;">my NDAD <span style="color:#10B981;">pro</span></div>
+                <div style="font-size:12px; color:#666; margin-top: 5px;">สอ.รร.นางแดดวังชมพูวิทยา รัชมังคลาภิเษก</div>
+                <div id="rTitle" style="font-size:16px; font-weight:600; color:#333; margin-top: 12px;">ใบเสร็จรับเงิน</div>
             </div>
-            <div style="border-top:1px dashed #ccc; margin:15px 0;"></div>
+            <div style="border-top:1px dashed #ddd; margin:20px 0;"></div>
             <div class="rcpt-row"><span class="rcpt-lbl">รหัสอ้างอิง:</span><span class="rcpt-val" id="rId"></span></div>
             <div class="rcpt-row"><span class="rcpt-lbl">วันที่ทำรายการ:</span><span class="rcpt-val" id="rDate"></span></div>
             <div class="rcpt-row"><span class="rcpt-lbl">ชื่อบัญชี:</span><span class="rcpt-val" id="rName"></span></div>
             
             <div id="rDivExtra" class="hidden">
-                <div style="border-top:1px dashed #ccc; margin:15px 0;"></div>
+                <div style="border-top:1px dashed #ddd; margin:20px 0;"></div>
                 <div class="rcpt-row"><span class="rcpt-lbl">ยอดเงินต้นสะสม:</span><span class="rcpt-val" id="rPrin"></span></div>
                 <div class="rcpt-row"><span class="rcpt-lbl" id="rPerc"></span><span class="rcpt-val" id="rGross"></span></div>
                 <div class="rcpt-row"><span class="rcpt-lbl" id="rDed"></span><span class="rcpt-val" style="color:#EF4444;" id="rDedA"></span></div>
             </div>
             
-            <div style="border-top:1px dashed #ccc; margin:20px 0;"></div>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <p style="font-size: 13px; color: #666; margin-bottom: 5px;" id="rTotalLbl">จำนวนเงินฝากออมทรัพย์ (THB)</p>
-                <h2 style="color:#0B192C; font-size: 32px;" id="rTotal"></h2>
+            <div style="border-top:1px dashed #ddd; margin:25px 0;"></div>
+            <div style="text-align: center; margin-bottom: 25px;">
+                <p style="font-size: 14px; color: #666; margin-bottom: 5px;" id="rTotalLbl">จำนวนเงินฝากออมทรัพย์ (THB)</p>
+                <h2 style="color:#0B192C; font-size: 36px; margin: 0;" id="rTotal"></h2>
             </div>
-            <div style="text-align: center; font-size: 10px; color: #999;">เอกสารฉบับนี้สร้างโดยระบบอัตโนมัติ</div>
+            <div style="text-align: center; font-size: 11px; color: #999;">เอกสารฉบับนี้สร้างโดยระบบอัตโนมัติ</div>
         </div>
-        <div style="display:flex; gap:12px; margin-top:25px; width:100%; max-width:360px;">
-            <button onclick="downloadRcpt()" style="flex:1; padding:14px; border-radius:12px; border:none; background:#00E5FF; color:#0B192C; font-weight:600; font-size:15px; cursor:pointer;">บันทึกภาพ</button>
-            <button onclick="document.getElementById('receiptModal').classList.remove('show')" style="flex:1; padding:14px; border-radius:12px; border:none; background:rgba(255,255,255,0.15); color:#fff; font-size:15px; cursor:pointer;">ปิดหน้าต่าง</button>
+        
+        <div style="display:flex; gap:15px; margin-top:30px; width:100%; max-width:380px;">
+            <button onclick="downloadRcpt()" style="flex:1; padding:16px; border-radius:14px; border:none; background:#00E5FF; color:#0B192C; font-weight:600; font-size:16px; cursor:pointer; box-shadow: 0 8px 20px rgba(0,229,255,0.3);"><i class="ph ph-download-simple"></i> บันทึกภาพ</button>
+            <button onclick="document.getElementById('receiptModal').classList.remove('show')" style="flex:1; padding:16px; border-radius:14px; border:none; background:rgba(255,255,255,0.2); color:#fff; font-size:16px; cursor:pointer;">ปิดหน้าต่าง</button>
         </div>
     </div>
 
     <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // แก้ไข Link URL ตรงนี้ครับ
+        // ---------------------------------------------------------
+        // 🚨 นำลิงก์ Web App (Deploy) ล่าสุดของคุณมาใส่ในบรรทัดนี้ครับ 🚨
         const API_URL = "https://script.google.com/macros/s/AKfycbzHpCbINz_7HThnA9fReRqpObPd6C7KO_TjQm2V4xPoyrEQW6_RAKAIi8Rs1wGvv1vq/exec"; 
-        
+        // ---------------------------------------------------------
+
         let currentUserEmail = "", currentUserRole = "";
 
+        // ================= UI & MODAL SYSTEM =================
+        let confirmCallback = null;
         function showModal(title, desc, isConfirm=false, onConfirm=null) {
             document.getElementById('modalTitle').innerText = title; 
             document.getElementById('modalDesc').innerHTML = desc;
-            let icon = 'ℹ️'; 
-            if(isConfirm) icon = '❓'; 
-            else if(title.includes('สำเร็จ')) icon = '✅';
-            else if(title.includes('ขัดข้อง') || title.includes('เตือน')) icon = '⚠️';
+            let icon = '<i class="ph ph-info"></i>'; 
+            if(isConfirm) icon = '<i class="ph ph-question" style="color:#F59E0B;"></i>'; 
+            else if(title.includes('สำเร็จ')) icon = '<i class="ph ph-check-circle" style="color:#10B981;"></i>';
+            else if(title.includes('ขัดข้อง') || title.includes('เตือน')) icon = '<i class="ph ph-warning-circle" style="color:#EF4444;"></i>';
+            
             document.getElementById('modalIcon').innerHTML = icon; 
             document.getElementById('modalInputArea').classList.add('hidden');
             document.getElementById('modalBtnCancel').classList.toggle('hidden', !isConfirm);
             confirmCallback = onConfirm; 
             document.getElementById('customModal').classList.add('show');
         }
+        
         function closeModal(confirm=false) { 
             document.getElementById('customModal').classList.remove('show'); 
             if(confirm && confirmCallback) confirmCallback(); 
         }
+        
         function showPrompt(title, desc, onConfirm) {
             showModal(title, desc, true, () => { onConfirm(document.getElementById('modalInput').value); });
             document.getElementById('modalInputArea').classList.remove('hidden'); 
             document.getElementById('modalInput').value = "";
         }
 
-        function switchAuthPanel(id) { document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
-        function switchAppPage(id, nav = null) {
+        function switchAuthPanel(id) { 
+            document.querySelectorAll('#authWrapper .glass-panel').forEach(el => el.classList.add('hidden')); 
+            document.getElementById(id).classList.remove('hidden'); 
+        }
+        
+        function switchAppPage(pageId, navId = null) {
             document.querySelectorAll('#appWrapper .page-section').forEach(el => el.classList.remove('active')); 
-            document.getElementById(id).classList.add('active');
-            if(nav) { document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); nav.classList.add('active'); }
-            if (id === 'page-notifications') document.getElementById("bellBadge").style.display = "none";
+            document.getElementById(pageId).classList.add('active');
+            
+            if(navId) { 
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active')); 
+                document.getElementById(navId).classList.add('active'); 
+            }
+            if (pageId === 'page-notifications') {
+                document.getElementById("bellBadge").style.display = "none";
+            }
         }
-        function switchAdminTab(id, el) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); el.classList.add('active');
-            document.querySelectorAll('[id^="adminContent"]').forEach(c => c.classList.add('hidden'));
-            document.getElementById('adminContent' + id.charAt(0).toUpperCase() + id.slice(1)).classList.remove('hidden');
+        
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); 
+            document.getElementById('tabBtn_' + tabId).classList.add('active');
+            
+            document.querySelectorAll('.admin-content-section').forEach(c => c.classList.add('hidden'));
+            document.getElementById('adminContent_' + tabId).classList.remove('hidden');
         }
+
         function showAppMode(mode) {
             ['authWrapper', 'appWrapper', 'adminWrapper'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(mode + 'Wrapper').classList.remove('hidden');
         }
+        
         function switchToAdminMode() { showAppMode('admin'); loadAdminData(); }
         function switchToUserMode() { showAppMode('user'); loadDashboardData(); }
-        function setBtn(id, isLoad, text="") { let b=document.getElementById(id); b.disabled=isLoad; if(text) b.innerHTML=text; }
+        function setBtn(id, isLoad, text="") { 
+            let b = document.getElementById(id); 
+            b.disabled = isLoad; 
+            if(text) b.innerHTML = text; 
+        }
 
+        // ================= AUTHENTICATION =================
         document.getElementById("loginForm").addEventListener("submit", e => { 
-            e.preventDefault(); setBtn('loginBtn', true, 'กำลังเข้าสู่ระบบ...');
-            fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "login", email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }) })
+            e.preventDefault(); 
+            setBtn('loginBtn', true, 'กำลังตรวจสอบข้อมูล...');
+            fetch(API_URL, { 
+                method: "POST", 
+                body: new URLSearchParams({ action: "login", email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }) 
+            })
             .then(r=>r.json()).then(d => {
                 setBtn('loginBtn', false, 'เข้าสู่ระบบ'); 
-                if (d.status==="success") {
-                    currentUserEmail = d.user.email; currentUserRole = d.user.role;
+                if (d.status === "success") {
+                    currentUserEmail = d.user.email; 
+                    currentUserRole = d.user.role;
                     document.getElementById("accName").innerText = "คุณ " + d.user.name; 
                     document.getElementById("accId").innerText = "เลขบัญชี: " + d.user.userId;
+                    
                     document.getElementById("switchToAdminBtn").classList.toggle("hidden", currentUserRole.toLowerCase() !== 'admin');
                     currentUserRole.toLowerCase() === 'admin' ? switchToAdminMode() : switchToUserMode();
-                } else showModal("แจ้งเตือน", d.message);
-            }).catch(e => { showModal("เครือข่ายขัดข้อง", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้"); setBtn('loginBtn', false, 'เข้าสู่ระบบ'); });
+                } else {
+                    showModal("แจ้งเตือน", d.message);
+                }
+            }).catch(e => { 
+                showModal("เครือข่ายขัดข้อง", "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ โปรดตรวจสอบอินเทอร์เน็ต"); 
+                setBtn('loginBtn', false, 'เข้าสู่ระบบ'); 
+            });
         });
 
+        // ================= USER DASHBOARD =================
         function loadDashboardData() {
-            fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "get_dashboard_data", email: currentUserEmail }) }).then(r=>r.json()).then(d => {
+            fetch(API_URL, { 
+                method: "POST", 
+                body: new URLSearchParams({ action: "get_dashboard_data", email: currentUserEmail }) 
+            })
+            .then(r=>r.json()).then(d => {
+                if(d.status !== "success") return;
+                
                 document.getElementById("accBalance").innerText = d.balance.toLocaleString('en-US', {minimumFractionDigits: 2});
+                
                 let histHtml = "", rcptHtml = "", notiHtml = "";
                 
-                d.history.forEach((tx, i) => {
-                    let st = tx.status==="Approved"?"สำเร็จ":tx.status==="Rejected"?"ปฏิเสธ":"รอดำเนินการ";
-                    let col = tx.status==="Approved"?"#10B981":tx.status==="Rejected"?"#EF4444":"#F59E0B";
+                (d.history || []).forEach((tx, i) => {
+                    let st = tx.status==="Approved" ? "สำเร็จ" : tx.status==="Rejected" ? "ปฏิเสธ" : "รอดำเนินการ";
+                    let col = tx.status==="Approved" ? "#10B981" : tx.status==="Rejected" ? "#EF4444" : "#F59E0B";
+                    let icon = tx.type==="Deposit" ? "ph-wallet" : tx.type==="Dividend" ? "ph-gift" : "ph-file-text";
                     let safeNotes = tx.notes ? tx.notes.replace(/'/g, "&#39;") : "{}";
                     
                     if(i < 5) {
-                        histHtml += `<div class="history-item">
-                            <div style="display:flex; gap:12px; align-items:center;">
-                                <div><div style="font-size:14px; font-weight:500;">${tx.type==="Deposit"?"ฝากเงินออมทรัพย์":"รับเงินปันผล"}</div><div style="font-size:11px; color:#888;">${tx.date}</div></div>
+                        histHtml += `
+                        <div class="history-item">
+                            <div style="display:flex; gap:15px; align-items:center;">
+                                <div class="hist-icon" style="background:rgba(255,255,255,0.08); color:${col};"><i class="ph ${icon}"></i></div>
+                                <div>
+                                    <div style="font-size:15px; font-weight:500;">${tx.type==="Deposit" ? "ฝากเงินออมทรัพย์" : "รับเงินปันผล"}</div>
+                                    <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-top:2px;">${tx.date}</div>
+                                </div>
                             </div>
-                            <div style="text-align:right;"><div style="color:${col}; font-weight:600; font-size:15px;">฿${tx.amount.toLocaleString()}</div><div style="font-size:10px; color:${col}; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; display:inline-block; margin-top:2px;">${st}</div></div>
+                            <div style="text-align:right;">
+                                <div style="color:${col}; font-weight:600; font-size:16px;">฿${tx.amount.toLocaleString()}</div>
+                                <div style="font-size:11px; color:${col}; background:rgba(255,255,255,0.1); padding:4px 8px; border-radius:6px; display:inline-block; margin-top:4px;">${st}</div>
+                            </div>
                         </div>`;
                     }
-                    if(tx.status==="Approved") {
-                        rcptHtml += `<div class="history-item">
-                            <div><div style="font-size:13px; font-weight:500;">${tx.type==="Deposit"?"ใบเสร็จฝากเงิน":"ใบเสร็จรับปันผล"} ฿${tx.amount.toLocaleString()}</div><div style="font-size:11px; color:#888;">${tx.date}</div></div>
-                            <button onclick="openRcpt('${tx.type}','${tx.txId}','${tx.date}',${tx.amount},'${safeNotes}')" style="padding:8px 12px; border:none; border-radius:8px; background:rgba(0,229,255,0.15); color:#00E5FF; font-size:12px; font-weight:500; cursor:pointer;">ดูใบเสร็จ</button>
+                    if(tx.status === "Approved") {
+                        rcptHtml += `
+                        <div class="history-item">
+                            <div>
+                                <div style="font-size:14px; font-weight:500;">${tx.type==="Deposit" ? "ใบเสร็จฝากเงิน" : "ใบเสร็จรับปันผล"} ฿${tx.amount.toLocaleString()}</div>
+                                <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-top:2px;">${tx.date}</div>
+                            </div>
+                            <button onclick="openRcpt('${tx.type}','${tx.txId}','${tx.date}',${tx.amount},'${safeNotes}')" style="padding:10px 14px; border:none; border-radius:10px; background:rgba(0,229,255,0.15); color:#00E5FF; font-size:13px; font-weight:500; cursor:pointer;"><i class="ph ph-receipt"></i> เปิดดู</button>
                         </div>`;
                     }
-                    if(tx.status!=="Pending") {
-                        notiHtml += `<div class="history-item" style="border-left: 4px solid ${col};"><div><div style="font-size:13px;">รายการ ${tx.type==="Deposit"?"ฝากเงิน":"ปันผล"} ฿${tx.amount.toLocaleString()}</div><div style="font-size:11px; color:#888;">สถานะ: ${st}</div></div></div>`;
-                        if(i===0) document.getElementById("bellBadge").style.display="block";
+                    if(tx.status !== "Pending") {
+                        notiHtml += `
+                        <div class="history-item" style="border-left: 4px solid ${col};">
+                            <div>
+                                <div style="font-size:14px;">รายการ ${tx.type==="Deposit" ? "ฝากเงิน" : "ปันผล"} ฿${tx.amount.toLocaleString()}</div>
+                                <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-top:4px;">สถานะ: ${st}</div>
+                            </div>
+                        </div>`;
+                        if(i === 0) document.getElementById("bellBadge").style.display = "block";
                     }
                 });
                 
-                document.getElementById("recentHistoryList").innerHTML = histHtml || "<div style='text-align:center; padding: 20px; color:rgba(255,255,255,0.5); font-size:13px;'>ไม่มีประวัติรายการ</div>";
-                document.getElementById("archiveReceiptList").innerHTML = rcptHtml || "<div style='text-align:center; padding: 20px; color:rgba(255,255,255,0.5); font-size:13px;'>ไม่มีใบเสร็จในคลัง</div>";
-                document.getElementById("notifyList").innerHTML = notiHtml || "<div style='text-align:center; padding: 20px; color:rgba(255,255,255,0.5); font-size:13px;'>ไม่มีการแจ้งเตือน</div>";
+                document.getElementById("recentHistoryList").innerHTML = histHtml || "<div style='text-align:center; padding: 25px; color:rgba(255,255,255,0.5); font-size:14px;'>ไม่มีประวัติรายการ</div>";
+                document.getElementById("archiveReceiptList").innerHTML = rcptHtml || "<div style='text-align:center; padding: 25px; color:rgba(255,255,255,0.5); font-size:14px;'>ไม่มีใบเสร็จในคลัง</div>";
+                document.getElementById("notifyList").innerHTML = notiHtml || "<div style='text-align:center; padding: 25px; color:rgba(255,255,255,0.5); font-size:14px;'>ไม่มีการแจ้งเตือน</div>";
 
                 // Loan Section
                 let loanHtml = "";
-                d.loans.forEach(l => {
-                    let st = l.status==="Approved"?"กำลังผ่อน":l.status==="Rejected"?"ไม่อนุมัติ":"รอพิจารณา";
-                    let col = l.status==="Approved"?"#00E5FF":l.status==="Rejected"?"#EF4444":"#F59E0B";
-                    let paySum = 0; d.loanPayments.forEach(p => { if(p.loanId == l.loanId && p.status == "Approved") paySum += parseFloat(p.amount); });
+                (d.loans || []).forEach(l => {
+                    let st = l.status==="Approved" ? "กำลังผ่อน" : l.status==="Rejected" ? "ไม่อนุมัติ" : "รอพิจารณา";
+                    let col = l.status==="Approved" ? "#00E5FF" : l.status==="Rejected" ? "#EF4444" : "#F59E0B";
+                    
+                    let paySum = 0; 
+                    (d.loanPayments || []).forEach(p => { 
+                        if(p.loanId == l.loanId && p.status == "Approved") paySum += parseFloat(p.amount); 
+                    });
+                    
                     let totalDebt = parseFloat(l.amount) + (parseFloat(l.amount) * parseFloat(l.interest) / 100);
                     let remain = totalDebt - paySum;
 
-                    loanHtml += `<div class="glass-card" style="padding:20px; margin-bottom:15px; border-left:4px solid ${col};">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><div style="font-size:13px; color:rgba(255,255,255,0.6);">สัญญา: ${l.loanId}</div><div style="font-size:12px; color:${col}; background:rgba(255,255,255,0.1); padding:4px 8px; border-radius:6px;">${st}</div></div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
-                            <div><div style="font-size:11px; color:rgba(255,255,255,0.5);">ยอดกู้ (บ.)</div><div style="font-size:18px; font-weight:600;">${l.amount.toLocaleString()}</div></div>
-                            <div style="text-align:right;"><div style="font-size:11px; color:rgba(255,255,255,0.5);">อัตราดอกเบี้ย</div><div style="font-size:18px; font-weight:600;">${l.interest}%</div></div>
+                    loanHtml += `
+                    <div class="glass-card" style="padding:20px; margin-bottom:20px; border-left:4px solid ${col};">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                            <div style="font-size:14px; color:rgba(255,255,255,0.7);">สัญญา: ${l.loanId}</div>
+                            <div style="font-size:12px; color:${col}; background:rgba(255,255,255,0.1); padding:4px 10px; border-radius:8px;">${st}</div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:15px;">
+                            <div>
+                                <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:2px;">ยอดขอกู้ (บาท)</div>
+                                <div style="font-size:20px; font-weight:600;">${l.amount.toLocaleString()}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:2px;">อัตราดอกเบี้ย</div>
+                                <div style="font-size:20px; font-weight:600;">${l.interest}%</div>
+                            </div>
                         </div>`;
                     
                     if(l.status === "Approved") {
-                        loanHtml += `<div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:12px; display:flex; justify-content:space-between; align-items:center;">
-                            <div><div style="font-size:11px; color:rgba(255,255,255,0.5);">ยอดหนี้คงเหลือ</div><div style="font-size:16px; font-weight:600; color:#F59E0B;">฿ ${remain.toLocaleString()}</div></div>
-                            ${remain > 0 ? `<button onclick="goPayLoan('${l.loanId}')" style="background:#00E5FF; color:#0B192C; border:none; padding:8px 16px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer;">ชำระค่างวด</button>` : `<div style="color:#10B981; font-size:13px; font-weight:600;">ปิดยอดแล้ว</div>`}
+                        loanHtml += `
+                        <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:2px;">ยอดหนี้คงเหลือ</div>
+                                <div style="font-size:18px; font-weight:600; color:#F59E0B;">฿ ${remain.toLocaleString()}</div>
+                            </div>
+                            ${remain > 0 ? `<button onclick="goPayLoan('${l.loanId}')" style="background:#00E5FF; color:#0B192C; border:none; padding:10px 16px; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; box-shadow: 0 4px 10px rgba(0,229,255,0.3);">ชำระค่างวด</button>` : `<div style="color:#10B981; font-size:14px; font-weight:600;"><i class="ph ph-check-circle"></i> ปิดยอดแล้ว</div>`}
                         </div>`;
                     }
                     loanHtml += `</div>`;
                 });
-                document.getElementById("loanActiveList").innerHTML = loanHtml || "<div style='text-align:center; padding:20px; color:rgba(255,255,255,0.5); font-size:13px;'>ยังไม่มีบัญชีสินเชื่อ</div>";
-                
-                // Dividend Section
-                let divHtml = "";
-                d.dividends.forEach(tx => { 
-                    let safeNotes = tx.notes ? tx.notes.replace(/'/g, "&#39;") : "{}";
-                    divHtml += `<div class="history-item"><div><div style="font-size:14px; font-weight:500;">เงินปันผลประจำปี</div><div style="font-size:11px; color:rgba(255,255,255,0.6);">${tx.date}</div><div onclick="openRcpt('Dividend', '${tx.txId}', '${tx.date}', ${tx.amount}, '${safeNotes}')" style="margin-top:8px; font-size:12px; color:#00E5FF; cursor:pointer; text-decoration:underline;">ดูใบเสร็จปันผล</div></div><div style="font-weight:600; font-size:16px; color:#10B981;">+฿${tx.amount.toLocaleString()}</div></div>`; 
-                });
-                document.getElementById("dividendList").innerHTML = divHtml || "<div style='text-align:center; padding:20px; color:rgba(255,255,255,0.5); font-size:13px;'>ยังไม่มีประวัติรับปันผล</div>";
+                document.getElementById("loanActiveList").innerHTML = loanHtml || "<div style='text-align:center; padding:25px; color:rgba(255,255,255,0.5); font-size:14px;'>ยังไม่มีบัญชีสินเชื่อ</div>";
             });
         }
 
+        // ================= UPLOAD ACTIONS =================
         function handleUpload(e, btnId, amtId, slipId, type, refId="") {
-            e.preventDefault(); const amt = document.getElementById(amtId).value; const file = document.getElementById(slipId).files[0];
-            if(!file) return; setBtn(btnId, true, "กำลังอัปโหลดสลิป...");
-            const r = new FileReader(); r.onload = ev => {
-                fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "upload_slip", email: currentUserEmail, amount: amt, fileName: file.name, fileData: ev.target.result, type: type, ref_id: refId }) })
-                .then(r=>r.json()).then(d => { setBtn(btnId, false, "ยืนยัน"); showModal("แจ้งสถานะ", d.message); if(d.status=="success"){ e.target.reset(); switchAppPage('page-home'); loadDashboardData(); }});
-            }; r.readAsDataURL(file);
+            e.preventDefault(); 
+            const amt = document.getElementById(amtId).value; 
+            const file = document.getElementById(slipId).files[0];
+            
+            if(!file) return showModal("แจ้งเตือน", "กรุณาแนบรูปภาพสลิป"); 
+            setBtn(btnId, true, "กำลังอัปโหลดสลิป...");
+            
+            const r = new FileReader(); 
+            r.onload = ev => {
+                fetch(API_URL, { 
+                    method: "POST", 
+                    body: new URLSearchParams({ action: "upload_slip", email: currentUserEmail, amount: amt, fileName: file.name, fileData: ev.target.result, type: type, ref_id: refId }) 
+                })
+                .then(r=>r.json()).then(d => { 
+                    setBtn(btnId, false, "ยืนยันข้อมูล"); 
+                    showModal("แจ้งสถานะ", d.message); 
+                    if(d.status === "success"){ 
+                        e.target.reset(); 
+                        switchAppPage('page-home', 'nav_home'); 
+                        loadDashboardData(); 
+                    }
+                }).catch(e => {
+                    setBtn(btnId, false, "ยืนยันข้อมูล");
+                    showModal("เครือข่ายขัดข้อง", "ไม่สามารถอัปโหลดได้ โปรดลองอีกครั้ง");
+                });
+            }; 
+            r.readAsDataURL(file);
         }
+
         document.getElementById("depositForm").addEventListener("submit", e => handleUpload(e, "depBtn", "depAmount", "depSlip", "Deposit"));
         document.getElementById("payLoanForm").addEventListener("submit", e => handleUpload(e, "payLoanBtn", "payLoanAmt", "payLoanSlip", "LoanPayment", document.getElementById("payLoanId").value));
 
         document.getElementById("reqLoanForm").addEventListener("submit", e => {
-            e.preventDefault(); setBtn('reqLoanBtn', true, "กำลังส่งคำขอ...");
-            fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "request_loan", email: currentUserEmail, amount: document.getElementById("reqLoanAmt").value }) })
-            .then(r=>r.json()).then(d => { setBtn('reqLoanBtn', false, "ยื่นคำขอกู้"); showModal("แจ้งสถานะ", d.message); if(d.status=="success"){ e.target.reset(); loadDashboardData(); } });
+            e.preventDefault(); 
+            setBtn('reqLoanBtn', true, "กำลังส่งคำขอ...");
+            fetch(API_URL, { 
+                method: "POST", 
+                body: new URLSearchParams({ action: "request_loan", email: currentUserEmail, amount: document.getElementById("reqLoanAmt").value }) 
+            })
+            .then(r=>r.json()).then(d => { 
+                setBtn('reqLoanBtn', false, "ส่งคำขอกู้"); 
+                showModal("แจ้งสถานะ", d.message); 
+                if(d.status === "success"){ 
+                    e.target.reset(); 
+                    loadDashboardData(); 
+                } 
+            });
         });
 
-        function goPayLoan(id) { document.getElementById("payLoanId").value = id; document.getElementById("payLoanIdTxt").innerText = id; switchAppPage('page-pay-loan'); }
+        function goPayLoan(id) { 
+            document.getElementById("payLoanId").value = id; 
+            document.getElementById("payLoanIdTxt").innerText = id; 
+            switchAppPage('page-pay-loan'); 
+        }
 
+        // ================= ADMIN FUNCTIONS =================
         function loadAdminData() {
-            fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_get_all_data" }) }).then(r=>r.json()).then(d => {
+            fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_get_all_data" }) })
+            .then(r=>r.json()).then(d => {
+                if (d.status !== "success") return;
+                
                 let rU="", rD="", rL="", rP="";
-                d.pendingUsers.forEach(u => rU += `<div class="admin-item-row"><div style="font-weight:500; font-size:14px;">${u.name}</div><div style="font-size:12px; color:rgba(255,255,255,0.6); margin-bottom:10px;">${u.email}</div><button onclick="adUp('${u.email}','Member','Approved')" class="admin-btn btn-green">อนุมัติสมาชิก</button></div>`);
-                d.deposits.forEach(t => rD += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:10px;"><span style="font-size:12px; color:rgba(255,255,255,0.6);">${t.email}</span><span style="color:#F59E0B; font-weight:600;">฿${t.amount}</span></div><a href="${t.slipUrl}" target="_blank" style="display:inline-block; background:rgba(0,229,255,0.1); padding:6px 12px; border-radius:6px; color:#00E5FF; text-decoration:none; font-size:12px; margin-bottom:15px;">ดูสลิปหลักฐาน</a><div style="display:flex; gap:10px;"><button onclick="adUp('${t.txId}','Deposit','Approved')" class="admin-btn btn-green" style="flex:1;">อนุมัติ</button><button onclick="adUp('${t.txId}','Deposit','Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`);
-                d.pendingLoans.forEach(l => rL += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:15px;"><span style="font-size:13px;">ขอกู้: <br><span style="color:rgba(255,255,255,0.6); font-size:11px;">${l.email}</span></span><span style="color:#00E5FF; font-weight:600; font-size:16px;">฿${l.amount}</span></div><div style="display:flex; gap:10px;"><button onclick="apprLoan('${l.loanId}')" class="admin-btn btn-green" style="flex:1;">อนุมัติ (กำหนด%)</button><button onclick="adUp('${l.loanId}','LoanAcc','Rejected')" class="admin-btn btn-red" style="flex:1;">ไม่อนุมัติ</button></div></div>`);
-                d.pendingLoanPayments.forEach(p => rP += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:10px;"><span style="font-size:12px; color:rgba(255,255,255,0.6);">ชำระกู้: ${p.email}</span><span style="color:#F59E0B; font-weight:600;">฿${p.amount}</span></div><a href="${p.slipUrl}" target="_blank" style="display:inline-block; background:rgba(0,229,255,0.1); padding:6px 12px; border-radius:6px; color:#00E5FF; text-decoration:none; font-size:12px; margin-bottom:15px;">ดูสลิป</a><div style="display:flex; gap:10px;"><button onclick="adUp('${p.payId}','LoanPay','Approved')" class="admin-btn btn-green" style="flex:1;">ตัดยอด</button><button onclick="adUp('${p.payId}','LoanPay','Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`);
+                
+                (d.pendingUsers || []).forEach(u => {
+                    rU += `<div class="admin-item-row"><div style="font-weight:500; font-size:15px; margin-bottom:4px;">${u.name}</div><div style="font-size:13px; color:rgba(255,255,255,0.6); margin-bottom:15px;">${u.email}</div><button onclick="adUp('${u.email}','Member','Approved')" class="admin-btn btn-green" style="width:100%;">อนุมัติสมาชิก</button></div>`;
+                });
+                
+                (d.deposits || []).forEach(t => {
+                    rD += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:12px;"><span style="font-size:13px; color:rgba(255,255,255,0.6);">${t.email}</span><span style="color:#F59E0B; font-weight:600; font-size:16px;">฿${t.amount.toLocaleString()}</span></div><a href="${t.slipUrl}" target="_blank" style="display:inline-block; background:rgba(0,229,255,0.1); padding:8px 14px; border-radius:10px; color:#00E5FF; text-decoration:none; font-size:13px; margin-bottom:15px;"><i class="ph ph-image"></i> ตรวจสอบสลิป</a><div style="display:flex; gap:10px;"><button onclick="adUp('${t.txId}','Deposit','Approved')" class="admin-btn btn-green" style="flex:1;">อนุมัติยอด</button><button onclick="adUp('${t.txId}','Deposit','Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`;
+                });
+                
+                (d.pendingLoans || []).forEach(l => {
+                    rL += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:15px;"><span style="font-size:14px;">ขอกู้: <br><span style="color:rgba(255,255,255,0.6); font-size:12px; margin-top:4px; display:block;">${l.email}</span></span><span style="color:#00E5FF; font-weight:600; font-size:18px;">฿${l.amount.toLocaleString()}</span></div><div style="display:flex; gap:10px;"><button onclick="apprLoan('${l.loanId}')" class="admin-btn btn-green" style="flex:1;">อนุมัติ (ใส่ดอกเบี้ย)</button><button onclick="adUp('${l.loanId}','LoanAcc','Rejected')" class="admin-btn btn-red" style="flex:1;">ไม่อนุมัติ</button></div></div>`;
+                });
+                
+                (d.pendingLoanPayments || []).forEach(p => {
+                    rP += `<div class="admin-item-row"><div style="display:flex;justify-content:space-between; margin-bottom:12px;"><span style="font-size:13px; color:rgba(255,255,255,0.6);">ชำระกู้: ${p.email}</span><span style="color:#F59E0B; font-weight:600; font-size:16px;">฿${p.amount.toLocaleString()}</span></div><a href="${p.slipUrl}" target="_blank" style="display:inline-block; background:rgba(0,229,255,0.1); padding:8px 14px; border-radius:10px; color:#00E5FF; text-decoration:none; font-size:13px; margin-bottom:15px;"><i class="ph ph-image"></i> ตรวจสอบสลิป</a><div style="display:flex; gap:10px;"><button onclick="adUp('${p.payId}','LoanPay','Approved')" class="admin-btn btn-green" style="flex:1;">ตัดยอดสำเร็จ</button><button onclick="adUp('${p.payId}','LoanPay','Rejected')" class="admin-btn btn-red" style="flex:1;">ปฏิเสธ</button></div></div>`;
+                });
 
-                document.getElementById("adUsers").innerHTML = rU || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:13px; padding:20px;'>ไม่มีรายการ</div>";
-                document.getElementById("adDeposits").innerHTML = rD || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:13px; padding:20px;'>ไม่มีรายการ</div>";
-                document.getElementById("adLoans").innerHTML = rL || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:13px; padding:20px;'>ไม่มีรายการ</div>";
-                document.getElementById("adPays").innerHTML = rP || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:13px; padding:20px;'>ไม่มีรายการ</div>";
+                document.getElementById("adUsers").innerHTML = rU || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:14px; padding:30px;'>ไม่มีรายการรอดำเนินการ</div>";
+                document.getElementById("adDeposits").innerHTML = rD || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:14px; padding:30px;'>ไม่มีรายการรอดำเนินการ</div>";
+                document.getElementById("adLoans").innerHTML = rL || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:14px; padding:30px;'>ไม่มีรายการรอดำเนินการ</div>";
+                document.getElementById("adPays").innerHTML = rP || "<div style='text-align:center; color:rgba(255,255,255,0.5); font-size:14px; padding:30px;'>ไม่มีรายการรอดำเนินการ</div>";
             });
         }
 
         function adUp(id, type, st, extra="") {
-            showModal("ยืนยัน", "ต้องการดำเนินการต่อใช่หรือไม่?", true, () => {
-                fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_update_status", id: id, type: type, status: st, target_email: id, extra: extra }) }).then(r=>r.json()).then(d => { if(d.status=="success") loadAdminData(); });
+            showModal("ยืนยัน", "ต้องการดำเนินการรายการนี้ใช่หรือไม่?", true, () => {
+                fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_update_status", id: id, type: type, status: st, target_email: id, extra: extra }) })
+                .then(r=>r.json()).then(d => { if(d.status==="success") loadAdminData(); else showModal("แจ้งเตือน", d.message); });
             });
         }
-        function apprLoan(id) { showPrompt("ระบุดอกเบี้ย", "กรุณาระบุอัตราดอกเบี้ย (%) สำหรับสินเชื่อนี้:", val => { if(val) adUp(id, 'LoanAcc', 'Approved', val); }); }
+        
+        function apprLoan(id) { 
+            showPrompt("กำหนดดอกเบี้ย", "กรุณาระบุอัตราดอกเบี้ย (%) สำหรับสินเชื่อบัญชีนี้:", val => { 
+                if(val) adUp(id, 'LoanAcc', 'Approved', val); 
+            }); 
+        }
 
         function adminDividend() {
-            showModal("จ่ายปันผล", "ระบบจะโอนเงินเข้าบัญชีสมาชิกทุกคนทันที ยืนยันใช่หรือไม่?", true, () => {
-                fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_calculate_dividend", percent: document.getElementById('divPercent').value, deduct_percent: document.getElementById('divDeduct').value }) }).then(r=>r.json()).then(d => { showModal("สำเร็จ", d.message); });
+            let percent = document.getElementById('divPercent').value;
+            let deduct = document.getElementById('divDeduct').value;
+            if(!percent) return showModal("แจ้งเตือน", "กรุณาระบุเปอร์เซ็นต์ปันผล");
+            
+            showModal("จ่ายปันผล", `ระบบจะคำนวณปันผล ${percent}% และโอนเข้าบัญชีสมาชิกทุกคนทันที ยืนยันใช่หรือไม่?`, true, () => {
+                fetch(API_URL, { method: "POST", body: new URLSearchParams({ action: "admin_calculate_dividend", percent: percent, deduct_percent: deduct }) })
+                .then(r=>r.json()).then(d => { showModal("สำเร็จ", d.message); document.getElementById('divPercent').value = ''; });
             });
         }
 
+        // ================= RECEIPT GENERATOR =================
         function openRcpt(type, id, date, amt, notes) {
-            document.getElementById('rId').innerText = id; document.getElementById('rDate').innerText = date; document.getElementById('rName').innerText = document.getElementById('accName').innerText;
-            document.getElementById('rTotal').innerText = "฿ " + amt.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('rId').innerText = id; 
+            document.getElementById('rDate').innerText = date; 
+            document.getElementById('rName').innerText = document.getElementById('accName').innerText;
+            document.getElementById('rTotal').innerText = "฿ " + parseFloat(amt).toLocaleString('en-US', {minimumFractionDigits: 2});
             
-            if(type=="Deposit") { 
-                document.getElementById('rTitle').innerText = "ใบเสร็จรับเงินฝากออมทรัพย์"; document.getElementById('rTitle').style.color = "#1e3c72";
+            if(type === "Deposit") { 
+                document.getElementById('rTitle').innerText = "ใบเสร็จรับเงินฝากออมทรัพย์"; 
+                document.getElementById('rTitle').style.color = "#1A365D";
                 document.getElementById('rTotalLbl').innerText = "จำนวนเงินฝากออมทรัพย์ (THB)";
                 document.getElementById('rDivExtra').classList.add('hidden'); 
             } else {
-                document.getElementById('rTitle').innerText = "ใบเสร็จรับเงินปันผล"; document.getElementById('rTitle').style.color = "#10B981";
+                document.getElementById('rTitle').innerText = "ใบเสร็จรับเงินปันผล"; 
+                document.getElementById('rTitle').style.color = "#10B981";
                 document.getElementById('rTotalLbl').innerText = "ได้รับปันผลสุทธิ (THB)";
-                let n = JSON.parse(notes);
+                
+                let n = {};
+                try { n = JSON.parse(notes); } catch(e) {}
+                
                 document.getElementById('rPrin').innerText = parseFloat(n.principal||0).toLocaleString('en-US', {minimumFractionDigits: 2}); 
                 document.getElementById('rPerc').innerText = `ปันผล (${n.percent}%):`; 
                 document.getElementById('rGross').innerText = parseFloat(n.grossAmount||0).toLocaleString('en-US', {minimumFractionDigits: 2}); 
@@ -632,7 +813,15 @@
             }
             document.getElementById('receiptModal').classList.add('show');
         }
-        function downloadRcpt() { html2canvas(document.getElementById('receiptBox'), {scale:3}).then(c => { let l=document.createElement('a'); l.download=`Receipt_${document.getElementById('rId').innerText}.jpg`; l.href=c.toDataURL("image/jpeg", 1.0); l.click(); }); }
+        
+        function downloadRcpt() { 
+            html2canvas(document.getElementById('receiptBox'), {scale: 3}).then(canvas => { 
+                let link = document.createElement('a'); 
+                link.download = `Receipt_${document.getElementById('rId').innerText}.jpg`; 
+                link.href = canvas.toDataURL("image/jpeg", 1.0); 
+                link.click(); 
+            }); 
+        }
     </script>
 </body>
 </html>
